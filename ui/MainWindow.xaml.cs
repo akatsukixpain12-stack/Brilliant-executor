@@ -170,8 +170,14 @@ namespace RblxExecutorUI
             }
             catch (Exception ex)
             {
-                InjectionStatus.Text = "INIT ERROR";
-                App.LogException(ex, "MainWindow_Loaded");
+                // Don't show INIT ERROR — just keep NOT ATTACHED
+                SetStatus("NOT ATTACHED", "#444444");
+                try
+                {
+                    string log = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "crash_log.txt");
+                    System.IO.File.AppendAllText(log, $"[Loaded] {ex.InnerException?.Message ?? ex.Message}\n");
+                }
+                catch { }
             }
         }
 
@@ -180,21 +186,29 @@ namespace RblxExecutorUI
         {
             try
             {
+                // Initialize() handles DLL-not-found internally and sets IsDllAvailable.
+                // If DLL is absent, just show NOT ATTACHED — no alarming message.
+                bool ok = RblxCore.Initialize();
+
                 if (!RblxCore.IsDllAvailable())
                 {
-                    SetStatus("CORE DLL MISSING", "#CC7700");
-                    ShowNotification("Syntax.dll not found. Run build_all.bat to compile the C++ core.", true);
+                    SetStatus("NOT ATTACHED", "#444444");
                     return;
                 }
 
-                bool ok = RblxCore.Initialize();
                 SetStatus(ok ? "NOT ATTACHED" : "SYSCALL FAILED",
                           ok ? "#444444" : "#CC3333");
             }
             catch (Exception ex)
             {
-                SetStatus("INIT ERROR", "#CC7700");
-                App.LogException(ex, "InitializeCore");
+                SetStatus("NOT ATTACHED", "#444444");
+                // Log silently — don't popup on missing DLL
+                try
+                {
+                    string log = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "crash_log.txt");
+                    System.IO.File.AppendAllText(log, $"[InitializeCore] {ex.Message}\n");
+                }
+                catch { }
             }
         }
 
@@ -473,6 +487,7 @@ namespace RblxExecutorUI
                         {
                             ShowNotification("Attached successfully!");
                             SetStatus("STABLE", "#00AA44");
+                            SetSideAttachAttached(true);
                             ClientPidText.Text = $"PID: {pid}  ·  Place: Active";
                             ClientStatusBadge.Text = "ACTIVE SESSION";
                             ClientStatusBadge.Foreground = (Brush)new BrushConverter().ConvertFrom("#00AA44")!;
@@ -492,6 +507,24 @@ namespace RblxExecutorUI
             { ShowNotification("Attach exception", true); App.LogException(ex, "Attach_Click"); }
         }
 
+        private void SetSideAttachAttached(bool attached)
+        {
+            if (attached)
+            {
+                SideAttachBtn.Background    = (Brush)new BrushConverter().ConvertFrom("#0F2A0F")!;
+                SideAttachBtn.Foreground    = (Brush)new BrushConverter().ConvertFrom("#00FF77")!;
+                SideAttachBtn.BorderBrush   = (Brush)new BrushConverter().ConvertFrom("#00AA44")!;
+                SideAttachBtn.IsEnabled     = false;
+            }
+            else
+            {
+                SideAttachBtn.Background    = (Brush)new BrushConverter().ConvertFrom("#0F1F0F")!;
+                SideAttachBtn.Foreground    = (Brush)new BrushConverter().ConvertFrom("#00CC66")!;
+                SideAttachBtn.BorderBrush   = (Brush)new BrushConverter().ConvertFrom("#1A3A1A")!;
+                SideAttachBtn.IsEnabled     = true;
+            }
+        }
+
         private void StartProcessMonitor(uint pid)
         {
             var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
@@ -502,6 +535,7 @@ namespace RblxExecutorUI
                 {
                     timer.Stop();
                     SetStatus("NOT ATTACHED", "#444444");
+                    SetSideAttachAttached(false);
                     ClientPidText.Text = "PID: —  ·  Place: —";
                     ClientStatusBadge.Text = "DISCONNECTED";
                     ClientStatusBadge.Foreground = (Brush)new BrushConverter().ConvertFrom("#444444")!;

@@ -408,6 +408,55 @@
                                 </StackPanel>
                             </RadioButton>
                         </StackPanel>
+
+                        <!-- Attach button pinned to bottom of sidebar -->
+                        <Border Grid.Row="1" VerticalAlignment="Bottom"
+                                BorderBrush="{StaticResource BorderDim}" BorderThickness="0,1,0,0"
+                                Padding="10,12">
+                            <Button x:Name="SideAttachBtn"
+                                    Click="Attach_Click"
+                                    Height="36"
+                                    Background="#0F1F0F"
+                                    Foreground="#00CC66"
+                                    BorderBrush="#1A3A1A"
+                                    BorderThickness="1"
+                                    Cursor="Hand"
+                                    FontSize="12"
+                                    FontWeight="SemiBold">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="attachBg"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="7">
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center">
+                                                <!-- Link / plug icon -->
+                                                <Path Data="M 3,9 L 6,6 M 10,6 L 13,3 M 6,3 L 13,3 L 13,10 M 3,6 L 3,13 L 10,13"
+                                                      Stroke="#00CC66" StrokeThickness="1.6"
+                                                      Stretch="Uniform" Width="13" Height="13"
+                                                      StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                                                      Margin="0,0,7,0"/>
+                                                <TextBlock Text="Attach"
+                                                           Foreground="{TemplateBinding Foreground}"
+                                                           VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="attachBg" Property="Background" Value="#152B15"/>
+                                                <Setter TargetName="attachBg" Property="BorderBrush" Value="#00AA44"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="attachBg" Property="Background" Value="#0A150A"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Border>
                     </Grid>
                 </Border>
 
