@@ -20,6 +20,8 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <filesystem>
+#include <vector>
+#include <algorithm>
 
 // Define NTSTATUS before bcrypt.h can — bcrypt.h checks #ifndef _NTDEF_
 #ifndef _NTDEF_
@@ -132,28 +134,62 @@ private:
             {"NtClose",                    &g_syscalls.NtClose},
         };
 
-        int found = 0;
+        // ----------------------------------------------------------------
+        // Hell's Gate + Halos Gate hybrid SSN resolution:
+        // Primary: read SSN directly from stub (4C 8B D1 B8 XX XX 00 00)
+        // Fallback: if stub starts with E9 (jmp = hooked), search nearby
+        //           stubs to infer SSN by adjacency (Halos Gate).
+        // ----------------------------------------------------------------
+
+        // Build sorted list of all Nt* functions with their RVAs for adjacency
+        struct NtFunc { std::string name; uint8_t* body; DWORD rva; };
+        std::vector<NtFunc> allNt;
         for (DWORD i = 0; i < exports->NumberOfNames; i++) {
-            auto name = reinterpret_cast<const char*>(rvaToOffset(names[i]));
-            if (!name) continue;
+            auto n = reinterpret_cast<const char*>(rvaToOffset(names[i]));
+            if (!n) continue;
+            if (n[0] != 'N' || n[1] != 't') continue;
+            auto body = rvaToOffset(funcs[ordinals[i]]);
+            if (!body) continue;
+            allNt.push_back({ n, body, funcs[ordinals[i]] });
+        }
+        // Sort by RVA so adjacent entries have SSN diff of 1
+        std::sort(allNt.begin(), allNt.end(),
+            [](const NtFunc& a, const NtFunc& b){ return a.rva < b.rva; });
 
-            auto it = needed.find(name);
-            if (it == needed.end()) continue;
-
-            // Get the function body
-            auto funcBody = rvaToOffset(funcs[ordinals[i]]);
-            if (!funcBody) continue;
-
-            // Extract SSN from the syscall stub pattern:
-            //   4C 8B D1          mov r10, rcx
-            //   B8 XX XX 00 00    mov eax, SSN
-            if (funcBody[0] == 0x4C && funcBody[1] == 0x8B && funcBody[2] == 0xD1 &&
-                funcBody[3] == 0xB8) {
-                uint32_t ssn = *reinterpret_cast<uint32_t*>(funcBody + 4);
-                *(it->second) = ssn;
-                found++;
+        // Assign SSN by sort index if direct read fails (Halos Gate)
+        auto extractSSN = [&](size_t idx) -> uint32_t {
+            uint8_t* body = allNt[idx].body;
+            // Direct: clean stub
+            if (body[0] == 0x4C && body[1] == 0x8B && body[2] == 0xD1 && body[3] == 0xB8)
+                return *reinterpret_cast<uint32_t*>(body + 4);
+            // Hooked (starts with JMP E9): walk neighbours to find clean stub
+            // Search forward
+            for (size_t d = 1; d < 10 && idx + d < allNt.size(); d++) {
+                uint8_t* nb = allNt[idx + d].body;
+                if (nb[0] == 0x4C && nb[1] == 0x8B && nb[2] == 0xD1 && nb[3] == 0xB8) {
+                    uint32_t nbSSN = *reinterpret_cast<uint32_t*>(nb + 4);
+                    return nbSSN - (uint32_t)d; // subtract offset to get our SSN
+                }
             }
+            // Search backward
+            for (size_t d = 1; d < 10 && idx >= d; d++) {
+                uint8_t* nb = allNt[idx - d].body;
+                if (nb[0] == 0x4C && nb[1] == 0x8B && nb[2] == 0xD1 && nb[3] == 0xB8) {
+                    uint32_t nbSSN = *reinterpret_cast<uint32_t*>(nb + 4);
+                    return nbSSN + (uint32_t)d;
+                }
+            }
+            return 0; // failed
+        };
 
+        int found = 0;
+        for (size_t idx = 0; idx < allNt.size(); idx++) {
+            auto it = needed.find(allNt[idx].name);
+            if (it == needed.end()) continue;
+            uint32_t ssn = extractSSN(idx);
+            if (ssn == 0) continue;
+            *(it->second) = ssn;
+            found++;
             if (found == static_cast<int>(needed.size())) break;
         }
 

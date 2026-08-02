@@ -6,7 +6,7 @@
 #include "process/scanner.h"
 #include "offsets.h"
 #include "execution/executor.h"
-#include "antidetect.h"
+#include "anti_detect.h"
 #include <optional>
 #include <memory>
 #include <vector>
