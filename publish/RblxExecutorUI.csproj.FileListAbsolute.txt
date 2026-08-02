@@ -1,0 +1,23 @@
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\RblxExecutorUI.csproj.AssemblyReference.cache
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\App.g.cs
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\Syntax Executor_MarkupCompile.cache
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\Syntax Executor_MarkupCompile.lref
+D:\Syntax Executor (Open Source)\ui\bin\x64\Release\net10.0-windows\win-x64\Lua.xshd
+D:\Syntax Executor (Open Source)\ui\bin\x64\Release\net10.0-windows\win-x64\Syntax Executor.exe
+D:\Syntax Executor (Open Source)\ui\bin\x64\Release\net10.0-windows\win-x64\Syntax Executor.deps.json
+D:\Syntax Executor (Open Source)\ui\bin\x64\Release\net10.0-windows\win-x64\Syntax Executor.runtimeconfig.json
+D:\Syntax Executor (Open Source)\ui\bin\x64\Release\net10.0-windows\win-x64\Syntax Executor.dll
+D:\Syntax Executor (Open Source)\ui\bin\x64\Release\net10.0-windows\win-x64\ICSharpCode.AvalonEdit.dll
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\MainWindow.baml
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\MainWindow.g.cs
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\App.baml
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\Syntax Executor.g.resources
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\RblxExecutorUI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\RblxExecutorUI.AssemblyInfoInputs.cache
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\RblxExecutorUI.AssemblyInfo.cs
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\RblxExecutorUI.csproj.CoreCompileInputs.cache
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\RblxExec.EAD08EB8.Up2Date
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\Syntax Executor.dll
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\refint\Syntax Executor.dll
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\RblxExecutorUI.genruntimeconfig.cache
+D:\Syntax Executor (Open Source)\ui\obj\x64\Release\net10.0-windows\win-x64\ref\Syntax Executor.dll
