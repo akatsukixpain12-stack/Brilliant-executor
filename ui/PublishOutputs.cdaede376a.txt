@@ -1,0 +1,2 @@
+d:\Syntax Executor (Open Source)\publish\Lua.xshd
+d:\Syntax Executor (Open Source)\publish\Syntax Executor.exe

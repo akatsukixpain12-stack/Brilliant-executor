@@ -1,0 +1,2 @@
+D:\Syntax Executor (Open Source)\ui\bin\Release\net10.0-windows\win-x64\publish\Lua.xshd
+D:\Syntax Executor (Open Source)\ui\bin\Release\net10.0-windows\win-x64\publish\Syntax Executor.exe
