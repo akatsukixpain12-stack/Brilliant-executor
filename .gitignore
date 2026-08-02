@@ -11,16 +11,15 @@ ui/obj/
 !publish/*.dll
 !third_party/**/*.dll
 
-# Publish artifacts (keep exe and dll for release)
-publish/Scripts/
+# Publish artifacts (keep dll but not the huge single-file exe)
+publish/Syntax Executor.exe
+publish/Syntax Executor.pdb
 publish/installer/
 publish/crash_log.txt
 publish/workspace/
 
 # Installer output
-*.exe
-!publish/*.exe
-!publish/Syntax Executor.exe
+installer/*.exe
 
 # IDE files
 .vs/
