@@ -11,6 +11,10 @@ ui/obj/
 !publish/*.dll
 !third_party/**/*.dll
 
+# Allow publish executables
+!publish/*.exe
+!publish/*.runtimeconfig.json
+
 # Publish artifacts (keep exe and dll for releases)
 publish/Syntax Executor.pdb
 publish/installer/

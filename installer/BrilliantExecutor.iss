@@ -7,7 +7,7 @@
 #define MyAppName "Brilliant Executor"
 #define MyAppVersion "2.0.0"
 #define MyAppPublisher "Brilliant"
-#define MyAppExeName "Syntax Executor.exe"
+#define MyAppExeName "brilliant Executor.exe"
 #define MyAppAssocName "Lua Script"
 #define MyAppAssocExt ".lua"
 

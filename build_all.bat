@@ -32,7 +32,7 @@ echo.
 
 if not exist "build" (
     echo   Configuring CMake...
-    cmake -B build -A x64
+    cmake -B build -G "NMake Makefiles"
     if !errorlevel! neq 0 (
         echo [ERROR] CMake configuration failed!
         exit /b 1
