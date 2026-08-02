@@ -1,0 +1,51 @@
+# Build directories
+build/
+bin/
+obj/
+*.user
+
+# .NET build artifacts
+ui/bin/
+ui/obj/
+*.dll
+!publish/*.dll
+!third_party/**/*.dll
+
+# Publish artifacts (keep exe and dll for release)
+publish/Scripts/
+publish/installer/
+publish/crash_log.txt
+publish/workspace/
+
+# Installer output
+*.exe
+!publish/*.exe
+!publish/Syntax Executor.exe
+
+# IDE files
+.vs/
+.vscode/
+*.suo
+*.user
+*.ncb
+*.sdf
+*.opensdf
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Temporary files
+*.tmp
+*.log
+*~
+*.swp
+
+# VS Code
+*.code-workspace
+
+# Visual Studio
+.vs/
+*.vcxproj.user

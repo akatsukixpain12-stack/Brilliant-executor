@@ -29,6 +29,6 @@ public partial class App : Application
         string content = $"[CRASH-{source}] {DateTime.Now}\n{ex.Message}\n{ex.StackTrace}\n\nInner: {ex.InnerException?.Message}\n{ex.InnerException?.StackTrace}";
         try { File.AppendAllText(logPath, content + "\n\n"); } catch { }
         Console.WriteLine($"[CRASH-{source}] {ex.Message}");
-        MessageBox.Show($"Error [{source}]:\n{ex.Message}", "Antigravity Error");
+        MessageBox.Show($"Error [{source}]:\n{ex.Message}", "Brilliant Executor Error");
     }
 }

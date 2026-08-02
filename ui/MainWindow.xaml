@@ -2,163 +2,80 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-        Title="Evo Executor" Height="620" Width="1100"
+        Title="Brilliant Executor" Height="600" Width="1060"
         Background="Transparent" Foreground="#E0E0E0"
         WindowStyle="None" AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        FontFamily="Segoe UI, 'Cascadia Code', 'Fira Code', monospace"
+        FontFamily="Segoe UI"
         ResizeMode="CanResize"
-        MinHeight="520" MinWidth="880">
+        MinHeight="520" MinWidth="860">
 
     <Window.Resources>
+        <!-- Colors matching Xeno style: near-black, very subtle gradients -->
+        <SolidColorBrush x:Key="BgMain"      Color="#0D0D0D"/>
+        <SolidColorBrush x:Key="BgSidebar"   Color="#0A0A0A"/>
+        <SolidColorBrush x:Key="BgPanel"     Color="#111111"/>
+        <SolidColorBrush x:Key="BgCard"      Color="#161616"/>
+        <SolidColorBrush x:Key="BgCardHov"   Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="BgInput"     Color="#0D0D0D"/>
+        <SolidColorBrush x:Key="BorderDim"   Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="BorderMid"   Color="#2A2A2A"/>
+        <SolidColorBrush x:Key="TextPri"     Color="#E8E8E8"/>
+        <SolidColorBrush x:Key="TextSec"     Color="#888888"/>
+        <SolidColorBrush x:Key="TextDim"     Color="#444444"/>
+        <SolidColorBrush x:Key="AccentWh"    Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="AccentGrn"   Color="#00CC66"/>
+        <SolidColorBrush x:Key="AccentRed"   Color="#CC3333"/>
+        <SolidColorBrush x:Key="AccentBlue"  Color="#3399FF"/>
+        <SolidColorBrush x:Key="TabActBg"    Color="#1A1A1A"/>
 
-        <!-- ============================================================ -->
-        <!--  CORE COLOR PALETTE - Neon Cyberpunk / Dark Glass              -->
-        <!-- ============================================================ -->
-        <Color x:Key="BgMain">#0A0E1A</Color>
-        <Color x:Key="BgSidebar">#070B14</Color>
-        <Color x:Key="BgSurface">#0D1220</Color>
-        <Color x:Key="BgCard">#111827</Color>
-        <Color x:Key="BgHover">#1A2235</Color>
-        <Color x:Key="BgToolbar">#0B1020</Color>
-        <Color x:Key="BgEditor">#080C18</Color>
-        <Color x:Key="BorderDim">#1E2A45</Color>
-        <Color x:Key="BorderMid">#2D3F66</Color>
-        <Color x:Key="BorderBright">#4A6FA5</Color>
-
-        <!-- Accent: Cyan/Teal Neon -->
-        <Color x:Key="AccentPrimary">#00E5FF</Color>
-        <Color x:Key="AccentSecondary">#00B4D8</Color>
-        <Color x:Key="AccentGlow">#0077B6</Color>
-        <Color x:Key="AccentGreen">#00F593</Color>
-        <Color x:Key="AccentPurple">#A855F7</Color>
-        <Color x:Key="AccentOrange">#FF8C00</Color>
-        <Color x:Key="AccentRed">#FF3B5C</Color>
-
-        <Color x:Key="TextPrimary">#F0F4FF</Color>
-        <Color x:Key="TextSecondary">#94A3B8</Color>
-        <Color x:Key="TextDim">#475569</Color>
-        <Color x:Key="TextMuted">#334155</Color>
-
-        <!-- Brushes -->
-        <SolidColorBrush x:Key="BrushAccent" Color="{StaticResource AccentPrimary}"/>
-        <SolidColorBrush x:Key="BrushAccentSec" Color="{StaticResource AccentSecondary}"/>
-        <SolidColorBrush x:Key="BrushGreen" Color="{StaticResource AccentGreen}"/>
-        <SolidColorBrush x:Key="BrushPurple" Color="{StaticResource AccentPurple}"/>
-        <SolidColorBrush x:Key="BrushOrange" Color="{StaticResource AccentOrange}"/>
-        <SolidColorBrush x:Key="BrushRed" Color="{StaticResource AccentRed}"/>
-        <SolidColorBrush x:Key="BrushPrimary" Color="{StaticResource TextPrimary}"/>
-        <SolidColorBrush x:Key="BrushSecondary" Color="{StaticResource TextSecondary}"/>
-        <SolidColorBrush x:Key="BrushDim" Color="{StaticResource TextDim}"/>
-        <SolidColorBrush x:Key="BrushMuted" Color="{StaticResource TextMuted}"/>
-
-        <!-- ============================================================ -->
-        <!--  GRADIENT BRUSHES                                              -->
-        <!-- ============================================================ -->
-        <LinearGradientBrush x:Key="GradSidebar" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#070B14" Offset="0.0"/>
-            <GradientStop Color="#0A0E1A" Offset="0.5"/>
-            <GradientStop Color="#070B14" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GradTitlebar" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Color="#0A0E1A" Offset="0.0"/>
-            <GradientStop Color="#0D1220" Offset="0.5"/>
-            <GradientStop Color="#0A0E1A" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GradAccent" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#00E5FF" Offset="0.0"/>
-            <GradientStop Color="#A855F7" Offset="0.5"/>
-            <GradientStop Color="#00F593" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GradCardHover" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#111827" Offset="0.0"/>
-            <GradientStop Color="#1A2235" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GradBtnExecute" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Color="#00E5FF" Offset="0.0"/>
-            <GradientStop Color="#00B4D8" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GradBtnDanger" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Color="#FF3B5C" Offset="0.0"/>
-            <GradientStop Color="#E6294A" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GradBtnAttach" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Color="#00F593" Offset="0.0"/>
-            <GradientStop Color="#00C47D" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="GradBtnDefault" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Color="#1E2A45" Offset="0.0"/>
-            <GradientStop Color="#2D3F66" Offset="1.0"/>
-        </LinearGradientBrush>
-
-        <!-- ============================================================ -->
-        <!--  GLOBAL STYLES                                                -->
-        <!-- ============================================================ -->
-
-        <!-- Scrollbar - Sleek neon style -->
-        <Style x:Key="NeonScrollThumb" TargetType="Thumb">
-            <Setter Property="Background" Value="#2D3F66"/>
-            <Setter Property="Width" Value="4"/>
-            <Setter Property="MinWidth" Value="4"/>
+        <!-- Thin scrollbar -->
+        <Style x:Key="ThinSBThumb" TargetType="Thumb">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Thumb">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="4"
-                                Margin="2,0" Width="4" HorizontalAlignment="Center"/>
+                        <Border Background="#2A2A2A" CornerRadius="3" Margin="2,0"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="NeonScrollBar" TargetType="ScrollBar">
+        <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="8"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ScrollBar">
-                        <Grid Background="{TemplateBinding Background}">
-                            <Track x:Name="PART_Track" IsDirectionReversed="True">
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource NeonScrollThumb}"/>
-                                </Track.Thumb>
-                            </Track>
-                        </Grid>
+                        <Grid><Track x:Name="PART_Track" IsDirectionReversed="True">
+                            <Track.Thumb><Thumb Style="{StaticResource ThinSBThumb}"/></Track.Thumb>
+                        </Track></Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <!-- Sidebar nav item - Glass effect -->
+        <!-- Sidebar nav radio -->
         <Style x:Key="NavItem" TargetType="RadioButton">
             <Setter Property="Height" Value="40"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource BrushDim}"/>
+            <Setter Property="Foreground" Value="#555555"/>
             <Setter Property="GroupName" Value="NavGroup"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="FontSize" Value="13"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <Border x:Name="bg" Background="Transparent" CornerRadius="8" Padding="14,0" Margin="6,0">
+                        <Border x:Name="bg" Background="Transparent" CornerRadius="6"
+                                Padding="14,0" Margin="6,0">
                             <ContentPresenter VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bg" Property="Background" Value="#151E30"/>
-                                <Setter Property="Foreground" Value="{StaticResource BrushSecondary}"/>
+                                <Setter TargetName="bg" Property="Background" Value="#111111"/>
+                                <Setter Property="Foreground" Value="#AAAAAA"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="bg" Property="Background" Value="#111827"/>
-                                <Setter TargetName="bg" Property="BorderBrush" Value="#2D3F66"/>
-                                <Setter TargetName="bg" Property="BorderThickness" Value="1"/>
-                                <Setter Property="Foreground" Value="{StaticResource BrushAccent}"/>
+                                <Setter TargetName="bg" Property="Background" Value="#161616"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -166,44 +83,32 @@
             </Setter>
         </Style>
 
-        <!-- Secondary nav items (bottom) -->
-        <Style x:Key="NavItemSmall" TargetType="RadioButton" BasedOn="{StaticResource NavItem}">
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="FontSize" Value="12"/>
-        </Style>
-
-        <!-- Tool button - Glassmorphism -->
+        <!-- Toolbar / action button -->
         <Style x:Key="ToolBtn" TargetType="Button">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Padding" Value="12,0"/>
-            <Setter Property="Background" Value="{StaticResource GradBtnDefault}"/>
-            <Setter Property="Foreground" Value="{StaticResource BrushSecondary}"/>
+            <Setter Property="Background" Value="#1A1A1A"/>
+            <Setter Property="Foreground" Value="#CCCCCC"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#1E2A45"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="bg" Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="6" Padding="{TemplateBinding Padding}">
-                            <Border.Effect>
-                                <DropShadowEffect Color="#00E5FF" BlurRadius="4" ShadowDepth="0" Opacity="0"/>
-                            </Border.Effect>
+                                CornerRadius="5" Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bg" Property="Background" Value="#1E2A45"/>
-                                <Setter TargetName="bg" Property="BorderBrush" Value="#4A6FA5"/>
-                                <Setter Property="Foreground" Value="{StaticResource BrushPrimary}"/>
+                                <Setter TargetName="bg" Property="Background" Value="#252525"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="bg" Property="Background" Value="#0D1220"/>
-                                <Setter TargetName="bg" Property="BorderBrush" Value="#00E5FF"/>
+                                <Setter TargetName="bg" Property="Background" Value="#0D0D0D"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -211,36 +116,43 @@
             </Setter>
         </Style>
 
-        <!-- Execute button - neon cyan -->
-        <Style x:Key="BtnExecute" TargetType="Button" BasedOn="{StaticResource ToolBtn}">
-            <Setter Property="Background" Value="{StaticResource GradBtnExecute}"/>
-            <Setter Property="Foreground" Value="#0A0E1A"/>
-            <Setter Property="BorderBrush" Value="#00E5FF"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+        <!-- Settings sub-tab button -->
+        <Style x:Key="SettingsTab" TargetType="RadioButton">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#666666"/>
+            <Setter Property="GroupName" Value="SettingsTabGroup"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="bg" Background="{TemplateBinding Background}"
+                                CornerRadius="5" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#161616"/>
+                                <Setter Property="Foreground" Value="#AAAAAA"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#1E1E1E"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <!-- Attach button - neon green -->
-        <Style x:Key="BtnAttach" TargetType="Button" BasedOn="{StaticResource ToolBtn}">
-            <Setter Property="Background" Value="{StaticResource GradBtnAttach}"/>
-            <Setter Property="Foreground" Value="#0A0E1A"/>
-            <Setter Property="BorderBrush" Value="#00F593"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-
-        <!-- Kill button - neon red -->
-        <Style x:Key="BtnDanger" TargetType="Button" BasedOn="{StaticResource ToolBtn}">
-            <Setter Property="Background" Value="{StaticResource GradBtnDanger}"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-            <Setter Property="BorderBrush" Value="#FF3B5C"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-
-        <!-- Script Tab -->
+        <!-- Script tab pill -->
         <Style x:Key="ScriptTab" TargetType="RadioButton">
             <Setter Property="Height" Value="32"/>
-            <Setter Property="Padding" Value="12,0,6,0"/>
+            <Setter Property="Padding" Value="12,0,5,0"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource BrushDim}"/>
+            <Setter Property="Foreground" Value="#555555"/>
             <Setter Property="GroupName" Value="ScriptTabGroup"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="FontSize" Value="12"/>
@@ -249,25 +161,25 @@
                     <ControlTemplate TargetType="RadioButton">
                         <Border x:Name="bg" Background="{TemplateBinding Background}"
                                 Padding="{TemplateBinding Padding}"
-                                BorderBrush="#1A2235" BorderThickness="0,0,1,0">
+                                BorderBrush="#1A1A1A" BorderThickness="0,0,1,0">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock x:Name="lbl" Text="{TemplateBinding Content}"
+                                <TextBlock Text="{TemplateBinding Content}"
                                            Foreground="{TemplateBinding Foreground}"
                                            VerticalAlignment="Center" FontSize="12"/>
-                                <Button x:Name="closeBtn" Content="×" Width="18" Height="18"
+                                <Button x:Name="closeBtn" Content="x" Width="18" Height="18"
                                         Background="Transparent" BorderThickness="0"
-                                        Foreground="{StaticResource BrushMuted}" FontSize="12"
-                                        Margin="6,0,0,0" Cursor="Hand" Padding="0"
+                                        Foreground="#333333" FontSize="12" Margin="5,0,0,0"
+                                        Cursor="Hand" Padding="0"
                                         Click="TabClose_Click" Tag="{TemplateBinding Tag}">
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
-                                            <Border x:Name="cbg" Background="Transparent" CornerRadius="4">
+                                            <Border x:Name="cbg" Background="Transparent" CornerRadius="3">
                                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="cbg" Property="Background" Value="#2D3F66"/>
-                                                    <Setter Property="Foreground" Value="{StaticResource BrushPrimary}"/>
+                                                    <Setter TargetName="cbg" Property="Background" Value="#2A2A2A"/>
+                                                    <Setter Property="Foreground" Value="#CCCCCC"/>
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -277,12 +189,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bg" Property="Background" Value="#151E30"/>
-                                <Setter Property="Foreground" Value="{StaticResource BrushSecondary}"/>
+                                <Setter TargetName="bg" Property="Background" Value="#141414"/>
+                                <Setter Property="Foreground" Value="#AAAAAA"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="bg" Property="Background" Value="#111827"/>
-                                <Setter Property="Foreground" Value="{StaticResource BrushAccent}"/>
+                                <Setter TargetName="bg" Property="Background" Value="#1A1A1A"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -295,20 +207,20 @@
             <Setter Property="Width" Value="36"/>
             <Setter Property="Height" Value="28"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource BrushDim}"/>
+            <Setter Property="Foreground" Value="#555555"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="4" Margin="2,0">
+                        <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="4" Margin="1,0">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bg" Property="Background" Value="#1A2235"/>
-                                <Setter Property="Foreground" Value="{StaticResource BrushPrimary}"/>
+                                <Setter TargetName="bg" Property="Background" Value="#1E1E1E"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -316,233 +228,232 @@
             </Setter>
         </Style>
 
-        <!-- ScrollViewer style -->
-        <Style x:Key="NeonScrollViewer" TargetType="ScrollViewer">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ScrollViewer">
-                        <Grid>
-                            <ScrollContentPresenter CanContentScroll="True" Margin="0,0,8,0"/>
-                            <ScrollBar x:Name="PART_VerticalScrollBar"
-                                       Style="{StaticResource NeonScrollBar}"
-                                       Value="{TemplateBinding VerticalOffset}"
-                                       Maximum="{TemplateBinding ScrollableHeight}"
-                                       ViewportSize="{TemplateBinding ViewportHeight}"
-                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                                       HorizontalAlignment="Right" Width="8"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- ScriptHub Card -->
-        <Style x:Key="HubCard" TargetType="Border">
-            <Setter Property="Background" Value="#111827"/>
-            <Setter Property="BorderBrush" Value="#1E2A45"/>
+        <!-- ScriptBlox card -->
+        <Style x:Key="BloxCard" TargetType="Border">
+            <Setter Property="Background" Value="#111111"/>
+            <Setter Property="BorderBrush" Value="#1E1E1E"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="10"/>
             <Setter Property="Padding" Value="16,14"/>
             <Setter Property="Margin" Value="0,0,0,8"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource GradCardHover}"/>
-                    <Setter Property="BorderBrush" Value="#4A6FA5"/>
+                    <Setter Property="Background" Value="#161616"/>
+                    <Setter Property="BorderBrush" Value="#333333"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
-        <!-- ScriptBlox Hub Card -->
-        <Style x:Key="BloxCard" TargetType="Border">
-            <Setter Property="Background" Value="#0F1525"/>
-            <Setter Property="BorderBrush" Value="#1E2A45"/>
+        <!-- Settings row card (full width, with toggle on right) -->
+        <Style x:Key="SettingsRow" TargetType="Border">
+            <Setter Property="Background" Value="#111111"/>
+            <Setter Property="BorderBrush" Value="#1E1E1E"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="16,14"/>
-            <Setter Property="Margin" Value="0,0,10,10"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#151E30"/>
-                    <Setter Property="BorderBrush" Value="#00E5FF"/>
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="20,16"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
         </Style>
 
-        <!-- ============================================================ -->
-        <!--  ANIMATION KEYFRAMES                                          -->
-        <!-- ============================================================ -->
-        <Storyboard x:Key="PulseAccent">
-            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                             From="0.4" To="1" Duration="0:0:1.5"
-                             AutoReverse="True" RepeatBehavior="Forever"/>
-        </Storyboard>
+        <!-- Toggle switch style for CheckBox -->
+        <Style x:Key="ToggleSwitch" TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border Width="44" Height="24" CornerRadius="12"
+                                x:Name="track" Background="#222222"
+                                BorderBrush="#333333" BorderThickness="1">
+                            <Border x:Name="thumb" Width="18" Height="18"
+                                    CornerRadius="9" Background="#555555"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="2,0,0,0">
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="ThumbTranslate" X="0"/>
+                                </Border.RenderTransform>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="track" Property="Background" Value="#1A3A1A"/>
+                                <Setter TargetName="track" Property="BorderBrush" Value="#00AA44"/>
+                                <Setter TargetName="thumb" Property="Background" Value="#00CC66"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ThumbTranslate"
+                                                             Storyboard.TargetProperty="X"
+                                                             To="20" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ThumbTranslate"
+                                                             Storyboard.TargetProperty="X"
+                                                             To="0" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="thumb" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
-    <!-- ============================================================ -->
-    <!--  ROOT - Outer drop shadow with glow                            -->
-    <!-- ============================================================ -->
-    <Border Margin="10" CornerRadius="12" ClipToBounds="False"
+    <!-- Root outer shadow -->
+    <Border Margin="10" CornerRadius="10" ClipToBounds="False"
             MouseLeftButtonDown="TitleBar_MouseDown">
         <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="40" ShadowDepth="8" Opacity="0.8" Direction="270"/>
+            <DropShadowEffect Color="Black" BlurRadius="35" ShadowDepth="8" Opacity="0.7" Direction="270"/>
         </Border.Effect>
-        <Border x:Name="MainBorder"
-                Background="#0A0E1A"
-                BorderBrush="#1E2A45"
-                BorderThickness="1"
-                CornerRadius="12"
-                ClipToBounds="True">
+        <Border Background="{StaticResource BgMain}" BorderBrush="{StaticResource BorderDim}"
+                BorderThickness="1" CornerRadius="10" ClipToBounds="True">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="195"/>
+                    <ColumnDefinition Width="185"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- ============================================================ -->
-                <!--  SIDEBAR                                                       -->
-                <!-- ============================================================ -->
-                <Border Grid.Column="0"
-                        Background="{StaticResource GradSidebar}"
-                        BorderBrush="#1A2235" BorderThickness="0,0,1,0">
+                <!-- ================================================================ -->
+                <!--  SIDEBAR                                                          -->
+                <!-- ================================================================ -->
+                <Border Grid.Column="0" Background="{StaticResource BgSidebar}"
+                        BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,1,0">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="55"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Logo -->
+                        <!-- Logo row -->
                         <Border Grid.Row="0" Padding="18,0"
-                                BorderBrush="#1A2235" BorderThickness="0,0,0,1">
+                                BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,0,1">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <!-- Animated neon logo icon -->
-                                <Grid Width="22" Height="22" Margin="0,0,10,0">
-                                    <Path Data="M 3,15 Q 9,1 15,3 Q 11,9 9,9 Q 7,15 3,15 Z M 9,9 L 3,15"
-                                          Stroke="{StaticResource BrushAccent}" StrokeThickness="1.8"
-                                          Fill="Transparent" Stretch="Uniform"
-                                          StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
-                                    <Path Data="M 3,15 Q 9,1 15,3 Q 11,9 9,9 Q 7,15 3,15 Z M 9,9 L 3,15"
-                                          Stroke="{StaticResource BrushPurple}" StrokeThickness="1.8"
-                                          Fill="Transparent" Stretch="Uniform" Opacity="0.4"
-                                          StrokeEndLineCap="Round" StrokeLineJoin="Round"
-                                          RenderTransformOrigin="0.5,0.5">
-                                        <Path.RenderTransform>
-                                            <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
-                                        </Path.RenderTransform>
-                                    </Path>
-                                </Grid>
-                                <TextBlock Text="SYNTAX" Foreground="{StaticResource BrushPrimary}"
-                                           FontSize="16" FontWeight="Bold"
-                                           VerticalAlignment="Center"/>
+                                <Path Data="M 3,15 Q 9,1 15,3 Q 11,9 9,9 Q 7,15 3,15 Z M 9,9 L 3,15"
+                                      Stroke="#DDDDDD" StrokeThickness="1.6" Fill="Transparent"
+                                      Stretch="Uniform" Width="17" Height="17"
+                                      StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                                      Margin="0,0,10,0"/>
+                                <TextBlock Text="Brilliant" Foreground="#EEEEEE"
+                                           FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
 
                         <!-- Nav items -->
-                        <StackPanel Grid.Row="1" Margin="8,16,8,0">
-                            <!-- Dashboard -->
+                        <StackPanel Grid.Row="1" Margin="8,10,8,0">
                             <RadioButton Style="{StaticResource NavItem}"
-                                         Checked="Tab_Dashboard" Margin="0,0,0,3">
+                                         Checked="Tab_Dashboard" Margin="0,0,0,2">
                                 <StackPanel Orientation="Horizontal">
                                     <Path Data="M 0,8 L 8,0 L 16,8 L 16,16 L 10,16 L 10,10 L 6,10 L 6,16 L 0,16 Z"
                                           Fill="Transparent"
                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                                          StrokeThickness="1.5" Stretch="Uniform" Width="16" Height="16"
-                                          StrokeLineJoin="Round" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Dashboard" VerticalAlignment="Center" FontSize="13"/>
+                                          StrokeThickness="1.4" Stretch="Uniform"
+                                          Width="15" Height="15" StrokeLineJoin="Round" Margin="0,0,11,0"/>
+                                    <TextBlock Text="Dashboard" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </RadioButton>
 
-                            <!-- Executor -->
                             <RadioButton Style="{StaticResource NavItem}"
-                                         IsChecked="True" Checked="Tab_Editor" Margin="0,0,0,3">
+                                         IsChecked="True" Checked="Tab_Editor" Margin="0,0,0,2">
                                 <StackPanel Orientation="Horizontal">
                                     <Path Data="M 2,14 L 8,8 L 2,2 M 10,14 L 16,14"
                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                                          StrokeThickness="2" Stretch="Uniform" Width="16" Height="16"
-                                          StrokeEndLineCap="Round" StrokeLineJoin="Round" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Editor" VerticalAlignment="Center" FontSize="13"/>
+                                          StrokeThickness="1.8" Stretch="Uniform"
+                                          Width="15" Height="15"
+                                          StrokeEndLineCap="Round" StrokeLineJoin="Round" Margin="0,0,11,0"/>
+                                    <TextBlock Text="Executor" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </RadioButton>
 
-                            <!-- ScriptBlox Hub -->
                             <RadioButton Style="{StaticResource NavItem}"
-                                         Checked="Tab_ScriptHub" Margin="0,0,0,3">
+                                         Checked="Tab_ScriptHub" Margin="0,0,0,2">
                                 <StackPanel Orientation="Horizontal">
                                     <Path Data="M 2,3 L 14,3 M 2,7 L 14,7 M 2,11 L 14,11 M 2,15 L 14,15"
                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                                          StrokeThickness="1.5" Stretch="Uniform" Width="16" Height="16"
-                                          StrokeEndLineCap="Round" Margin="0,0,12,0"/>
-                                    <TextBlock Text="ScriptBlox" VerticalAlignment="Center" FontSize="13"/>
+                                          StrokeThickness="1.4" Stretch="Uniform"
+                                          Width="15" Height="15"
+                                          StrokeEndLineCap="Round" Margin="0,0,11,0"/>
+                                    <TextBlock Text="Scripthub" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </RadioButton>
 
-                            <!-- Client Manager -->
                             <RadioButton Style="{StaticResource NavItem}"
-                                         Checked="Tab_Clients" Margin="0,0,0,3">
+                                         Checked="Tab_Clients" Margin="0,0,0,2">
                                 <StackPanel Orientation="Horizontal">
                                     <Path Data="M 8,7 A 3.5,3.5 0 1,0 8,0 A 3.5,3.5 0 1,0 8,7 Z M 1,15 C 1,10 15,10 15,15"
                                           Fill="Transparent"
                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                                          StrokeThickness="1.5" Stretch="Uniform" Width="16" Height="16"
-                                          StrokeEndLineCap="Round" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Clients" VerticalAlignment="Center" FontSize="13"/>
+                                          StrokeThickness="1.4" Stretch="Uniform"
+                                          Width="15" Height="15"
+                                          StrokeEndLineCap="Round" Margin="0,0,11,0"/>
+                                    <TextBlock Text="Client Manager" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </RadioButton>
-                        </StackPanel>
 
-                        <!-- Bottom section - Settings -->
-                        <StackPanel Grid.Row="2" Margin="8,0,8,14">
-                            <Border Height="1" Background="#1A2235" Margin="6,0,6,10"/>
-                            <RadioButton Style="{StaticResource NavItemSmall}"
+                            <RadioButton Style="{StaticResource NavItem}"
                                          Checked="Tab_Settings" Margin="0,0,0,2">
                                 <StackPanel Orientation="Horizontal">
-                                    <Path Data="M 8,5 A 3,3 0 1,0 8,11 A 3,3 0 1,0 8,5 Z M 8,0 L 8,3 M 8,13 L 8,16 M 0,8 L 3,8 M 13,8 L 16,8 M 2.3,2.3 L 4.4,4.4 M 11.6,11.6 L 13.7,13.7 M 13.7,2.3 L 11.6,4.4 M 4.4,11.6 L 2.3,13.7"
+                                    <Path Data="M 8,5 A 3,3 0 1,0 8,11 A 3,3 0 1,0 8,5 Z M 8,0 L 8,3 M 8,13 L 8,16 M 0,8 L 3,8 M 13,8 L 16,8"
                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                                          StrokeThickness="1.5" Stretch="Uniform" Width="14" Height="14"
-                                          StrokeEndLineCap="Round" Margin="0,0,12,0"/>
-                                    <TextBlock Text="Settings" VerticalAlignment="Center" FontSize="12"/>
+                                          StrokeThickness="1.4" Stretch="Uniform"
+                                          Width="15" Height="15"
+                                          StrokeEndLineCap="Round" Margin="0,0,11,0"/>
+                                    <TextBlock Text="Settings" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </RadioButton>
                         </StackPanel>
                     </Grid>
                 </Border>
 
-                <!-- ============================================================ -->
-                <!--  MAIN CONTENT AREA                                            -->
-                <!-- ============================================================ -->
+                <!-- ================================================================ -->
+                <!--  MAIN CONTENT COLUMN                                              -->
+                <!-- ================================================================ -->
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Title bar -->
-                    <Border Grid.Row="0"
-                            Background="{StaticResource GradTitlebar}"
-                            BorderBrush="#1A2235" BorderThickness="0,0,0,1">
+                    <!-- Title bar / chrome -->
+                    <Border Grid.Row="0" Background="#0A0A0A"
+                            BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,0,1">
                         <Grid>
-                            <!-- Connection indicator dot -->
-                            <Ellipse x:Name="StatusDot" Width="6" Height="6"
-                                     Fill="#334155" HorizontalAlignment="Left"
-                                     VerticalAlignment="Center" Margin="14,0,0,0">
-                                <Ellipse.Effect>
-                                    <DropShadowEffect Color="#00E5FF" BlurRadius="6" ShadowDepth="0" Opacity="0"/>
-                                </Ellipse.Effect>
-                            </Ellipse>
-                            <TextBlock x:Name="WindowTitle" Text="Evo Executor"
-                                       Foreground="{StaticResource BrushMuted}" FontSize="11"
-                                       VerticalAlignment="Center" HorizontalAlignment="Left"
-                                       Margin="26,0,0,0"/>
-
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                         VerticalAlignment="Center" Margin="0,0,4,0">
-                                <Button Style="{StaticResource ChromeBtn}" Content="─"
-                                        Click="Minimize_Click" ToolTip="Minimize"/>
-                                <Button Style="{StaticResource ChromeBtn}" Content="□"
-                                        Click="Maximize_Click" ToolTip="Maximize"/>
-                                <Button x:Name="CloseBtn" Style="{StaticResource ChromeBtn}" Content="✕"
-                                        Click="Close_Click" ToolTip="Close"
-                                        Foreground="{StaticResource BrushDim}"/>
+                                <Button Style="{StaticResource ChromeBtn}" Content="-" Click="Minimize_Click"/>
+                                <Button Style="{StaticResource ChromeBtn}" Content="?" Click="Maximize_Click"/>
+                                <Button Content="?" Click="Close_Click"
+                                        Foreground="#555555" Cursor="Hand"
+                                        BorderThickness="0" FontSize="12">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Width" Value="36"/>
+                                            <Setter Property="Height" Value="28"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="4" Margin="1,0">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="bg" Property="Background" Value="#CC2222"/>
+                                                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -550,352 +461,350 @@
                     <!-- Page container -->
                     <Grid Grid.Row="1">
 
-                        <!-- ================================================ -->
-                        <!--  EXECUTOR PAGE                                    -->
-                        <!-- ================================================ -->
-                        <Grid x:Name="ViewEditor" Visibility="Visible">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="34"/>
-                                <RowDefinition Height="44"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="26"/>
-                            </Grid.RowDefinitions>
-
-                            <!-- Tab bar -->
-                            <Border Grid.Row="0" Background="#0B1020"
-                                    BorderBrush="#1A2235" BorderThickness="0,0,0,1">
-                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                              VerticalScrollBarVisibility="Disabled"
-                                              HorizontalAlignment="Left" VerticalAlignment="Stretch"
-                                              Style="{StaticResource NeonScrollViewer}">
-                                    <StackPanel x:Name="TabBarPanel" Orientation="Horizontal"
-                                                VerticalAlignment="Stretch"/>
-                                </ScrollViewer>
-                            </Border>
-
-                            <!-- Toolbar -->
-                            <Border Grid.Row="1" Background="#0D1220"
-                                    BorderBrush="#1A2235" BorderThickness="0,0,0,1"
-                                    Padding="10,0">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <!-- Execute -->
-                                    <Button Style="{StaticResource BtnExecute}" Click="Execute_Click">
-                                         <StackPanel Orientation="Horizontal">
-                                            <Path Data="M 1,0 L 9,5 L 1,10 Z" Fill="#0A0E1A"
-                                                  Stretch="Uniform" Width="10" Height="12"/>
-                                            <TextBlock Text="Execute" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <!-- Clear -->
-                                    <Button Style="{StaticResource ToolBtn}" Click="Clear_Click">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Path Data="M 3,4 L 13,4 M 6,4 L 6,2 L 10,2 L 10,4 M 4,4 L 4,13 L 12,13 L 12,4"
-                                                  Stroke="{StaticResource BrushSecondary}" StrokeThickness="1.2" Fill="Transparent"
-                                                  Stretch="Uniform" Width="11" Height="13"
-                                                  StrokeLineJoin="Round" StrokeEndLineCap="Round"/>
-                                            <TextBlock Text="Clear" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <!-- Separator -->
-                                    <Rectangle Width="1" Margin="4,4" Fill="#1A2235"/>
-                                    <!-- Attach -->
-                                    <Button Style="{StaticResource BtnAttach}" Click="Attach_Click">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Path Data="M 4,8 L 8,4 L 12,8 M 8,4 L 8,14 M 2,14 L 14,14"
-                                                  Stroke="#0A0E1A" StrokeThickness="1.8" Fill="Transparent"
-                                                  Stretch="Uniform" Width="12" Height="13"
-                                                  StrokeLineJoin="Round" StrokeEndLineCap="Round"/>
-                                            <TextBlock Text="Attach" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <!-- Kill Roblox -->
-                                    <Button Style="{StaticResource BtnDanger}" Click="KillRoblox_Click">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Path Data="M 2,2 L 12,12 M 12,2 L 2,12"
-                                                  Stroke="#FFFFFF" StrokeThickness="1.8"
-                                                  Stretch="Uniform" Width="10" Height="10"
-                                                  StrokeEndLineCap="Round"/>
-                                            <TextBlock Text="Kill" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <!-- Separator -->
-                                    <Rectangle Width="1" Margin="4,4" Fill="#1A2235"/>
-                                    <!-- Save -->
-                                    <Button Style="{StaticResource ToolBtn}" Click="Save_Click">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Path Data="M 2,2 L 12,2 L 12,13 L 2,13 Z M 4,2 L 4,5 L 10,5 L 10,2 M 3,13 L 3,8 L 11,8 L 11,13"
-                                                  Stroke="{StaticResource BrushSecondary}" StrokeThickness="1.2" Fill="Transparent"
-                                                  Stretch="Uniform" Width="11" Height="13"
-                                                  StrokeLineJoin="Round"/>
-                                            <TextBlock Text="Save" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <!-- Open -->
-                                    <Button Style="{StaticResource ToolBtn}" Click="Open_Click">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Path Data="M 1,4 L 6,4 L 8,6 L 14,6 L 14,13 L 1,13 Z"
-                                                  Stroke="{StaticResource BrushSecondary}" StrokeThickness="1.2" Fill="Transparent"
-                                                  Stretch="Uniform" Width="13" Height="11"
-                                                  StrokeLineJoin="Round"/>
-                                            <TextBlock Text="Open" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                </StackPanel>
-                            </Border>
-
-                            <!-- AvalonEdit Editor -->
-                            <avalonEdit:TextEditor Grid.Row="2"
-                                x:Name="Editor"
-                                FontFamily="'Cascadia Code', 'Fira Code', Consolas, 'Courier New', monospace"
-                                FontSize="13"
-                                Background="#080C18"
-                                Foreground="#D0D8E8"
-                                ShowLineNumbers="True"
-                                LineNumbersForeground="#1E2A45"
-                                Padding="4,6,8,6"/>
-
-                            <!-- Status bar -->
-                            <Border Grid.Row="3" Background="#070B14"
-                                    BorderBrush="#1A2235" BorderThickness="0,1,0,0"
-                                    Padding="14,0">
-                                <Grid>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Ellipse x:Name="StatusIndicator" Width="5" Height="5"
-                                                 Fill="#334155" Margin="0,0,8,0"/>
-                                        <TextBlock x:Name="InjectionStatus" Text="NOT ATTACHED"
-                                                   Foreground="{StaticResource BrushDim}" FontSize="10.5"
-                                                   VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <TextBlock x:Name="StatusRight" Text="⚡ v1.0"
-                                               Foreground="{StaticResource BrushMuted}" FontSize="10.5"
-                                               VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                </Grid>
-                            </Border>
-                        </Grid>
-
-                        <!-- ================================================ -->
-                        <!--  DASHBOARD PAGE                                   -->
-                        <!-- ================================================ -->
+                        <!-- ======================================================== -->
+                        <!--  DASHBOARD PAGE                                           -->
+                        <!-- ======================================================== -->
                         <Grid x:Name="ViewDashboard" Visibility="Collapsed">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                          Style="{StaticResource NeonScrollViewer}"
-                                          Padding="30,25">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20,18">
                                 <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
-                                        <TextBlock Text="Dashboard" Foreground="{StaticResource BrushPrimary}"
-                                                   FontSize="22" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Border Background="#111827" BorderBrush="#1E2A45"
-                                                BorderThickness="1" CornerRadius="12" Padding="10,4"
-                                                Margin="12,0,0,0" VerticalAlignment="Center">
-                                            <TextBlock Text="LIVE" Foreground="{StaticResource BrushGreen}"
-                                                       FontSize="9" FontWeight="Bold"/>
-                                        </Border>
-                                    </StackPanel>
-
-                                    <!-- Info card -->
-                                    <Border Background="#111827" BorderBrush="#1E2A45"
-                                            BorderThickness="1" CornerRadius="12" Padding="22,18"
-                                            Margin="0,0,0,16">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border Grid.Column="0" Width="44" Height="44"
-                                                    CornerRadius="10" Background="#0D1220"
-                                                    BorderBrush="#1E2A45" BorderThickness="1"
-                                                    VerticalAlignment="Center" Margin="0,0,16,0">
-                                                <Path Data="M 3,15 Q 9,1 15,3 Q 11,9 9,9 Q 7,15 3,15 Z M 9,9 L 3,15"
-                                                      Stroke="{StaticResource BrushAccent}" StrokeThickness="1.5"
-                                                      Fill="Transparent" Stretch="Uniform"
-                                                      StrokeEndLineCap="Round" StrokeLineJoin="Round"
-                                                      Width="18" Height="18"
-                                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                <TextBlock Text="Syntax Executor" Foreground="{StaticResource BrushPrimary}"
-                                                           FontSize="16" FontWeight="SemiBold" Margin="0,0,0,3"/>
-                                                <TextBlock Text="Version 1.0.0  ·  External Execution Engine  ·  ScriptBlox Ready"
-                                                           Foreground="{StaticResource BrushDim}" FontSize="11"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-
-                                    <!-- Quick stats grid -->
-                                    <Grid Margin="0,0,0,16">
+                                    <!-- Top 3 cards: Visit Website, Version, Community -->
+                                    <Grid Margin="0,0,0,14">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Border Grid.Column="0" Background="#111827" BorderBrush="#1E2A45"
-                                                BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,0,6,0">
-                                            <StackPanel>
-                                                <TextBlock Text="API Scripts" Foreground="{StaticResource BrushDim}"
-                                                           FontSize="10"/>
-                                                <TextBlock x:Name="DashScriptCount" Text="0" 
-                                                           Foreground="{StaticResource BrushAccent}"
-                                                           FontSize="22" FontWeight="Bold" Margin="0,4,0,0"/>
+                                        <Border Grid.Column="0" Background="#111111" BorderBrush="#1E1E1E"
+                                                BorderThickness="1" CornerRadius="8" Padding="20,18"
+                                                Margin="0,0,6,0">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <Path Data="M 2,3 L 14,3 L 14,11 L 2,11 Z M 5,11 L 5,13 L 11,13"
+                                                      Stroke="#999999" StrokeThickness="1.4" Fill="Transparent"
+                                                      Stretch="Uniform" Width="20" Height="16"
+                                                      StrokeLineJoin="Round" HorizontalAlignment="Center"
+                                                      Margin="0,0,0,8"/>
+                                                <TextBlock Text="Visit Our Website" Foreground="#CCCCCC"
+                                                           FontSize="13" FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                                <Button Style="{StaticResource ToolBtn}" Height="30"
+                                                        Click="OpenWebsite_Click" HorizontalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path Data="M 2,8 L 8,2 L 14,8 M 8,2 L 8,14"
+                                                              Stroke="#CCCCCC" StrokeThickness="1.4" Fill="Transparent"
+                                                              Stretch="Uniform" Width="9" Height="11"
+                                                              StrokeEndLineCap="Round"/>
+                                                        <TextBlock Text="Open Website" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </Border>
-                                        <Border Grid.Column="1" Background="#111827" BorderBrush="#1E2A45"
-                                                BorderThickness="1" CornerRadius="10" Padding="16" Margin="3,0">
-                                            <StackPanel>
-                                                <TextBlock Text="Status" Foreground="{StaticResource BrushDim}"
-                                                           FontSize="10"/>
-                                                <TextBlock x:Name="DashStatus" Text="Ready"
-                                                           Foreground="{StaticResource BrushGreen}"
-                                                           FontSize="22" FontWeight="Bold" Margin="0,4,0,0"/>
+                                        <Border Grid.Column="1" Background="#111111" BorderBrush="#1E1E1E"
+                                                BorderThickness="1" CornerRadius="8" Padding="20,18"
+                                                Margin="3,0">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <Path Data="M 8,2 A 6,6 0 1,0 8,14 A 6,6 0 1,0 8,2 Z M 8,5 L 8,9 L 11,11"
+                                                      Stroke="#999999" StrokeThickness="1.4" Fill="Transparent"
+                                                      Stretch="Uniform" Width="18" Height="18"
+                                                      StrokeEndLineCap="Round" HorizontalAlignment="Center"
+                                                      Margin="0,0,0,8"/>
+                                                <TextBlock Text="Version: v1.0.0" Foreground="#CCCCCC"
+                                                           FontSize="13" FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                                <Button Style="{StaticResource ToolBtn}" Height="30"
+                                                        Click="DownloadLatest_Click" HorizontalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path Data="M 8,2 L 8,12 M 4,8 L 8,12 L 12,8 M 2,14 L 14,14"
+                                                              Stroke="#CCCCCC" StrokeThickness="1.4" Fill="Transparent"
+                                                              Stretch="Uniform" Width="9" Height="11"
+                                                              StrokeEndLineCap="Round"/>
+                                                        <TextBlock Text="Download Latest" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </Border>
-                                        <Border Grid.Column="2" Background="#111827" BorderBrush="#1E2A45"
-                                                BorderThickness="1" CornerRadius="10" Padding="16" Margin="6,0,0,0">
-                                            <StackPanel>
-                                                <TextBlock Text="Version" Foreground="{StaticResource BrushDim}"
-                                                           FontSize="10"/>
-                                                <TextBlock Text="1.0.0"
-                                                           Foreground="{StaticResource BrushPurple}"
-                                                           FontSize="22" FontWeight="Bold" Margin="0,4,0,0"/>
+                                        <Border Grid.Column="2" Background="#111111" BorderBrush="#1E1E1E"
+                                                BorderThickness="1" CornerRadius="8" Padding="20,18"
+                                                Margin="6,0,0,0">
+                                            <StackPanel HorizontalAlignment="Center">
+                                                <Path Data="M 8,7 A 3.5,3.5 0 1,0 8,0 A 3.5,3.5 0 1,0 8,7 Z M 1,15 C 1,10 15,10 15,15"
+                                                      Fill="Transparent" Stroke="#999999"
+                                                      StrokeThickness="1.4" Stretch="Uniform"
+                                                      Width="18" Height="18"
+                                                      StrokeEndLineCap="Round" HorizontalAlignment="Center"
+                                                      Margin="0,0,0,8"/>
+                                                <TextBlock Text="Join Our Community" Foreground="#CCCCCC"
+                                                           FontSize="13" FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                                                <Button Style="{StaticResource ToolBtn}" Height="30"
+                                                        Click="JoinDiscord_Click" HorizontalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path Data="M 2,8 L 8,2 L 14,8 M 8,2 L 8,14"
+                                                              Stroke="#CCCCCC" StrokeThickness="1.4" Fill="Transparent"
+                                                              Stretch="Uniform" Width="9" Height="11"
+                                                              StrokeEndLineCap="Round"/>
+                                                        <TextBlock Text="Join Discord" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </Border>
                                     </Grid>
 
-                                    <!-- Quick actions -->
-                                    <Border Background="#111827" BorderBrush="#1E2A45"
-                                            BorderThickness="1" CornerRadius="12" Padding="22,18">
+                                    <!-- Latest Updates -->
+                                    <Border Background="#111111" BorderBrush="#1E1E1E"
+                                            BorderThickness="1" CornerRadius="8"
+                                            Padding="0,0,0,0" Margin="0,0,0,14">
                                         <StackPanel>
-                                            <TextBlock Text="Quick Actions" Foreground="{StaticResource BrushSecondary}"
-                                                       FontSize="13" FontWeight="SemiBold" Margin="0,0,0,14"/>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Button Style="{StaticResource BtnExecute}" Height="34"
-                                                        Click="Tab_Editor_Quick">
-                                                    <TextBlock Text="Open Editor" Margin="4,0"/>
-                                                </Button>
-                                                <Button Style="{StaticResource BtnAttach}" Height="34"
-                                                        Click="Attach_Click">
-                                                    <TextBlock Text="Quick Attach" Margin="4,0"/>
-                                                </Button>
-                                                <Button Style="{StaticResource ToolBtn}" Height="34"
-                                                        Click="Tab_ScriptHub_Quick">
-                                                    <TextBlock Text="Browse Scripts" Margin="4,0"/>
-                                                </Button>
+                                            <StackPanel HorizontalAlignment="Center" Margin="0,18,0,12">
+                                                <Path Data="M 8,2 L 10,6 L 14,7 L 11,10 L 12,14 L 8,12 L 4,14 L 5,10 L 2,7 L 6,6 Z"
+                                                      Stroke="#999999" StrokeThickness="1.2" Fill="Transparent"
+                                                      Stretch="Uniform" Width="18" Height="18"
+                                                      StrokeLineJoin="Round" HorizontalAlignment="Center"
+                                                      Margin="0,0,0,6"/>
+                                                <TextBlock Text="Latest Updates" Foreground="#CCCCCC"
+                                                           FontSize="14" FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center"/>
+                                                <TextBlock Text="Stay updated with the latest features and improvements"
+                                                           Foreground="#555555" FontSize="11"
+                                                           HorizontalAlignment="Center" Margin="0,3,0,0"/>
                                             </StackPanel>
+                                            <ItemsControl x:Name="UpdatesList">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Background="Transparent" Padding="20,9"
+                                                                BorderBrush="#1A1A1A" BorderThickness="0,0,0,1">
+                                                            <TextBlock Text="{Binding}" Foreground="#777777" FontSize="12"/>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Credits -->
+                                    <Border Background="#111111" BorderBrush="#1E1E1E"
+                                            BorderThickness="1" CornerRadius="8" Padding="20,18">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <Path Data="M 8,7 A 3.5,3.5 0 1,0 8,0 A 3.5,3.5 0 1,0 8,7 Z M 1,15 C 1,10 15,10 15,15 M 6,8 L 10,8"
+                                                  Fill="Transparent" Stroke="#999999"
+                                                  StrokeThickness="1.4" Stretch="Uniform"
+                                                  Width="18" Height="18"
+                                                  StrokeEndLineCap="Round" HorizontalAlignment="Center"
+                                                  Margin="0,0,0,8"/>
+                                            <TextBlock Text="Credits" Foreground="#CCCCCC"
+                                                       FontSize="14" FontWeight="SemiBold"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Brilliant Executor x Built with C++ + WPF C#"
+                                                       Foreground="#555555" FontSize="11"
+                                                       HorizontalAlignment="Center" Margin="0,4,0,0"/>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
                             </ScrollViewer>
                         </Grid>
 
-                        <!-- ================================================ -->
-                        <!--  SCRIPTHUB / SCRIPTBLOX PAGE                       -->
-                        <!-- ================================================ -->
+                        <!-- ======================================================== -->
+                        <!--  EXECUTOR PAGE                                            -->
+                        <!-- ======================================================== -->
+                        <Grid x:Name="ViewEditor" Visibility="Visible">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition Height="42"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="24"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Script tab bar -->
+                            <Border Grid.Row="0" Background="#0F0F0F"
+                                    BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,0,1">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled"
+                                              HorizontalAlignment="Left">
+                                    <StackPanel x:Name="TabBarPanel" Orientation="Horizontal"/>
+                                </ScrollViewer>
+                            </Border>
+
+                            <!-- Toolbar -->
+                            <Border Grid.Row="1" Background="#111111"
+                                    BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,0,1"
+                                    Padding="10,0">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button Style="{StaticResource ToolBtn}" Click="Execute_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Data="M 1,0 L 9,5 L 1,10 Z" Fill="#CCCCCC"
+                                                  Stretch="Uniform" Width="9" Height="10"/>
+                                            <TextBlock Text="Execute" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource ToolBtn}" Click="Clear_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Data="M 3,4 L 13,4 M 6,4 L 6,2 L 10,2 L 10,4 M 4,4 L 4,13 L 12,13 L 12,4"
+                                                  Stroke="#CCCCCC" StrokeThickness="1.3" Fill="Transparent"
+                                                  Stretch="Uniform" Width="9" Height="11"
+                                                  StrokeLineJoin="Round" StrokeEndLineCap="Round"/>
+                                            <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource ToolBtn}" Click="KillRoblox_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Data="M 2,2 L 12,12 M 12,2 L 2,12"
+                                                  Stroke="#CC4444" StrokeThickness="1.8"
+                                                  Stretch="Uniform" Width="9" Height="9"
+                                                  StrokeEndLineCap="Round"/>
+                                            <TextBlock Text="Kill Roblox" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource ToolBtn}" Click="Save_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Data="M 2,2 L 12,2 L 12,13 L 2,13 Z M 4,2 L 4,5 L 10,5 L 10,2 M 3,13 L 3,8 L 11,8 L 11,13"
+                                                  Stroke="#CCCCCC" StrokeThickness="1.3" Fill="Transparent"
+                                                  Stretch="Uniform" Width="9" Height="11"
+                                                  StrokeLineJoin="Round"/>
+                                            <TextBlock Text="Save" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource ToolBtn}" Click="Open_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Data="M 1,4 L 6,4 L 8,6 L 14,6 L 14,13 L 1,13 Z"
+                                                  Stroke="#CCCCCC" StrokeThickness="1.3" Fill="Transparent"
+                                                  Stretch="Uniform" Width="11" Height="9"
+                                                  StrokeLineJoin="Round"/>
+                                            <TextBlock Text="Open" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource ToolBtn}" Click="Attach_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Data="M 4,8 L 8,4 L 12,8 M 8,4 L 8,14 M 2,14 L 14,14"
+                                                  Stroke="#CCCCCC" StrokeThickness="1.3" Fill="Transparent"
+                                                  Stretch="Uniform" Width="11" Height="10"
+                                                  StrokeLineJoin="Round" StrokeEndLineCap="Round"/>
+                                            <TextBlock Text="Attach" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- AvalonEdit -->
+                            <avalonEdit:TextEditor Grid.Row="2" x:Name="Editor"
+                                FontFamily="'Cascadia Code', Consolas, 'Courier New', monospace"
+                                FontSize="13" Background="#0D0D0D" Foreground="#CCCCCC"
+                                ShowLineNumbers="True" LineNumbersForeground="#2A2A2A"
+                                Padding="4,6,8,6"/>
+
+                            <!-- Status bar -->
+                            <Border Grid.Row="3" Background="#0A0A0A"
+                                    BorderBrush="{StaticResource BorderDim}" BorderThickness="0,1,0,0"
+                                    Padding="14,0">
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Ellipse x:Name="StatusIndicator" Width="5" Height="5"
+                                                 Fill="#333333" Margin="0,0,7,0"/>
+                                        <TextBlock x:Name="InjectionStatus" Text="NOT ATTACHED"
+                                                   Foreground="#444444" FontSize="10.5" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Brilliant Executor v1.0"
+                                               Foreground="#2A2A2A" FontSize="10.5"
+                                               VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!-- ======================================================== -->
+                        <!--  SCRIPTHUB / SCRIPTBLOX PAGE                             -->
+                        <!-- ======================================================== -->
                         <Grid x:Name="ViewScriptHub" Visibility="Collapsed">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="55"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0" Background="#0B1020"
-                                    BorderBrush="#1A2235" BorderThickness="0,0,0,1"
+
+                            <!-- Header -->
+                            <Border Grid.Row="0" Background="#0F0F0F"
+                                    BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,0,1"
                                     Padding="20,0">
                                 <Grid>
-                                    <TextBlock Text="ScriptBlox" Foreground="{StaticResource BrushPrimary}"
-                                               FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Scripthub" Foreground="#DDDDDD"
+                                               FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                                                 VerticalAlignment="Center">
+                                        <Button x:Name="BtnLocalScripts" Style="{StaticResource ToolBtn}"
+                                                Height="30" Click="ShowLocalScripts">
+                                            <TextBlock Text="Local" FontSize="11" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Button x:Name="BtnBloxScripts" Style="{StaticResource ToolBtn}"
+                                                Height="30" Click="ShowBloxScripts">
+                                            <TextBlock Text="ScriptBlox" FontSize="11" VerticalAlignment="Center"/>
+                                        </Button>
                                         <Button Style="{StaticResource ToolBtn}" Height="30"
-                                                Click="ScriptBlox_Refresh" Padding="10,0">
+                                                Click="ScriptBlox_Refresh">
                                             <StackPanel Orientation="Horizontal">
                                                 <Path Data="M 2,8 A 6,6 0 1,1 14,8 M 14,2 L 14,8 L 8,8"
-                                                      Stroke="{StaticResource BrushSecondary}" StrokeThickness="1.5"
-                                                      Fill="Transparent" Stretch="Uniform" Width="12" Height="12"
+                                                      Stroke="#CCCCCC" StrokeThickness="1.4"
+                                                      Fill="Transparent" Stretch="Uniform"
+                                                      Width="11" Height="11"
                                                       StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
-                                                <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Refresh" VerticalAlignment="Center" FontSize="11"/>
                                             </StackPanel>
                                         </Button>
                                     </StackPanel>
                                 </Grid>
                             </Border>
 
-                            <!-- Search / Filter Bar -->
-                            <Border Grid.Row="1" Background="#0D1220"
-                                    BorderBrush="#1A2235" BorderThickness="0,0,0,1"
+                            <!-- Search bar -->
+                            <Border Grid.Row="1" Background="#0D0D0D"
+                                    BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,0,1"
                                     Padding="16,10">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" Background="#0A0E1A" BorderBrush="#1E2A45"
-                                            BorderThickness="1" CornerRadius="8" Padding="10,6"
-                                            Height="32">
-                                        <Grid>
-                                            <TextBlock Text="Search ScriptBlox scripts..." IsHitTestVisible="False"
-                                                       Foreground="{StaticResource BrushMuted}" FontSize="11"
-                                                       VerticalAlignment="Center" Visibility="{Binding ElementName=SearchBox, Path=Text.IsEmpty, Converter={x:Null}}"/>
-                                            <TextBox x:Name="SearchBox" Background="Transparent"
-                                                     BorderThickness="0" Foreground="{StaticResource BrushPrimary}"
-                                                     FontSize="11" VerticalAlignment="Center"
-                                                     Padding="0" TextChanged="SearchBox_TextChanged"/>
-                                        </Grid>
-                                    </Border>
-                                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
-                                        <Button x:Name="BtnLocalScripts" Style="{StaticResource ToolBtn}" Height="32"
-                                                Click="ShowLocalScripts" Padding="10,0">
-                                            <TextBlock Text="Local" VerticalAlignment="Center" FontSize="11"/>
-                                        </Button>
-                                        <Button x:Name="BtnBloxScripts" Style="{StaticResource BtnExecute}" Height="32"
-                                                Click="ShowBloxScripts" Padding="10,0">
-                                            <TextBlock Text="ScriptBlox" VerticalAlignment="Center" FontSize="11"
-                                                       Foreground="#0A0E1A"/>
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
+                                <Border Background="#0A0A0A" BorderBrush="#1E1E1E"
+                                        BorderThickness="1" CornerRadius="7" Padding="10,0" Height="32">
+                                    <Grid>
+                                        <TextBlock x:Name="SearchPlaceholder" Text="Search ScriptBlox scripts..."
+                                                   Foreground="#333333" FontSize="11"
+                                                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+                                        <TextBox x:Name="SearchBox" Background="Transparent"
+                                                 BorderThickness="0" Foreground="#CCCCCC"
+                                                 FontSize="11" VerticalAlignment="Center"
+                                                 CaretBrush="#CCCCCC" Padding="0"
+                                                 TextChanged="SearchBox_TextChanged"/>
+                                    </Grid>
+                                </Border>
                             </Border>
 
-                            <!-- Script List -->
+                            <!-- Script list -->
                             <ScrollViewer Grid.Row="2" Padding="16,12"
                                           VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Disabled"
-                                          Style="{StaticResource NeonScrollViewer}">
+                                          HorizontalScrollBarVisibility="Disabled">
+
                                 <StackPanel>
-                                    <!-- Local Scripts section -->
+                                    <!-- Local scripts -->
                                     <StackPanel x:Name="LocalScriptsPanel" Visibility="Visible">
-                                        <TextBlock Text="LOCAL SCRIPTS" Foreground="{StaticResource BrushDim}"
-                                                   FontSize="10" Margin="4,0,0,10"/>
+                                        <TextBlock Text="LOCAL SCRIPTS" Foreground="#444444"
+                                                   FontSize="10" FontWeight="SemiBold"
+                                                   Margin="2,0,0,8"/>
                                         <ItemsControl x:Name="ScriptHubList">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Style="{StaticResource HubCard}">
+                                                    <Border Style="{StaticResource BloxCard}">
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto"/>
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="Auto"/>
                                                             </Grid.ColumnDefinitions>
-                                                            <Border Grid.Column="0" Width="32" Height="32"
-                                                                    CornerRadius="6" Background="#0D1220"
-                                                                    BorderBrush="#1E2A45" BorderThickness="1"
-                                                                    Margin="0,0,10,0" VerticalAlignment="Center">
-                                                                <Path Data="M 2,3 L 14,3 M 2,7 L 14,7 M 2,11 L 14,11 M 2,15 L 14,15"
-                                                                      Stroke="{StaticResource BrushAccent}" StrokeThickness="1.2"
-                                                                      Stretch="Uniform" Width="12" Height="12"
-                                                                      StrokeEndLineCap="Round"
-                                                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                            </Border>
-                                                            <TextBlock Grid.Column="1" Text="{Binding Name}"
-                                                                       Foreground="{StaticResource BrushSecondary}"
+                                                            <TextBlock Text="{Binding Name}" Foreground="#AAAAAA"
                                                                        FontSize="12" VerticalAlignment="Center"/>
-                                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                            <StackPanel Grid.Column="1" Orientation="Horizontal">
                                                                 <Button Style="{StaticResource ToolBtn}" Content="Run"
-                                                                        Click="ExecuteScriptHub_Click" Tag="{Binding FullPath}"
-                                                                        Margin="0,0,4,0" FontSize="11"/>
+                                                                        Click="ExecuteScriptHub_Click"
+                                                                        Tag="{Binding FullPath}"
+                                                                        FontSize="11" Height="26"/>
                                                                 <Button Style="{StaticResource ToolBtn}" Content="Copy"
-                                                                        Click="CopyScriptHub_Click" Tag="{Binding FullPath}"
-                                                                        Margin="0,0,4,0" FontSize="11"/>
-                                                                <Button Style="{StaticResource ToolBtn}" Content="×"
-                                                                        Click="DeleteScriptHub_Click" Tag="{Binding FullPath}"
-                                                                        FontSize="11" Padding="6,0"/>
+                                                                        Click="CopyScriptHub_Click"
+                                                                        Tag="{Binding FullPath}"
+                                                                        FontSize="11" Height="26"/>
+                                                                <Button Style="{StaticResource ToolBtn}" Content="?"
+                                                                        Click="DeleteScriptHub_Click"
+                                                                        Tag="{Binding FullPath}"
+                                                                        FontSize="11" Height="26" Padding="6,0"/>
                                                             </StackPanel>
                                                         </Grid>
                                                     </Border>
@@ -904,10 +813,11 @@
                                         </ItemsControl>
                                     </StackPanel>
 
-                                    <!-- ScriptBlox section -->
+                                    <!-- ScriptBlox scripts -->
                                     <StackPanel x:Name="BloxScriptsPanel" Visibility="Collapsed">
-                                        <TextBlock Text="SCRIPTBLOX.COM" Foreground="{StaticResource BrushAccent}"
-                                                   FontSize="10" Margin="4,0,0,10"/>
+                                        <TextBlock Text="SCRIPTBLOX.COM" Foreground="#444444"
+                                                   FontSize="10" FontWeight="SemiBold"
+                                                   Margin="2,0,0,8"/>
                                         <ItemsControl x:Name="BloxScriptsListView">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -917,58 +827,44 @@
                                                                 <RowDefinition Height="Auto"/>
                                                                 <RowDefinition Height="Auto"/>
                                                             </Grid.RowDefinitions>
-                                                            <Grid Grid.Row="0" Margin="0,0,0,8">
+                                                            <Grid Grid.Row="0" Margin="0,0,0,6">
                                                                 <Grid.ColumnDefinitions>
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                                                    <Border Width="28" Height="28" CornerRadius="6"
-                                                                            Background="#0D1220" BorderBrush="#2D3F66"
-                                                                            BorderThickness="1" VerticalAlignment="Center">
-                                                                        <Path Data="M 2,3 L 14,3 M 2,7 L 14,7 M 2,11 L 14,11 M 2,15 L 14,15"
-                                                                              Stroke="{StaticResource BrushAccent}" StrokeThickness="1.2"
-                                                                              Stretch="Uniform" Width="12" Height="12"
-                                                                              StrokeEndLineCap="Round"
-                                                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                    </Border>
-                                                                    <TextBlock Text="{Binding Title}" 
-                                                                               Foreground="{StaticResource BrushPrimary}"
-                                                                               FontSize="13" FontWeight="SemiBold"
-                                                                               VerticalAlignment="Center"/>
-                                                                </StackPanel>
-                                                                <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                                                            VerticalAlignment="Center">
-                                                                    <Border Background="#1A2235" CornerRadius="4" Padding="6,2">
-                                                                        <TextBlock Foreground="{StaticResource BrushAccent}"
-                                                                                   FontSize="9" FontWeight="Bold">
-                                                                            <Run Text="{Binding Views}"/>
-                                                                        </TextBlock>
-                                                                    </Border>
-                                                                </StackPanel>
+                                                                <TextBlock Text="{Binding Title}"
+                                                                           Foreground="#DDDDDD"
+                                                                           FontSize="13" FontWeight="SemiBold"
+                                                                           VerticalAlignment="Center"/>
+                                                                <Border Grid.Column="1" Background="#1A1A1A"
+                                                                        CornerRadius="4" Padding="6,2"
+                                                                        VerticalAlignment="Center">
+                                                                    <TextBlock Foreground="#555555"
+                                                                               FontSize="10">
+                                                                        <Run Text="{Binding Views}"/>
+                                                                        <Run Text=" views"/>
+                                                                    </TextBlock>
+                                                                </Border>
                                                             </Grid>
                                                             <Grid Grid.Row="1">
                                                                 <Grid.ColumnDefinitions>
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Column="0" Text="{Binding Description}"
-                                                                           Foreground="{StaticResource BrushDim}"
-                                                                           FontSize="10.5"
+                                                                <TextBlock Text="{Binding Description}"
+                                                                           Foreground="#555555" FontSize="11"
                                                                            TextTrimming="CharacterEllipsis"
-                                                                           MaxHeight="32" LineHeight="16"
                                                                            VerticalAlignment="Center"/>
-                                                                <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                                                            Margin="10,0,0,0"
-                                                                            VerticalAlignment="Center">
-                                                                    <Button Style="{StaticResource BtnExecute}"
-                                                                            Content="Load" Padding="10,0" Height="28"
-                                                                            Click="BloxLoad_Click"
-                                                                            Tag="{Binding ScriptId}" FontSize="10"/>
+                                                                <StackPanel Grid.Column="1"
+                                                                            Orientation="Horizontal" Margin="10,0,0,0">
                                                                     <Button Style="{StaticResource ToolBtn}"
-                                                                            Content="Copy" Padding="10,0" Height="28"
+                                                                            Content="Load" Padding="10,0" Height="26"
+                                                                            Click="BloxLoad_Click"
+                                                                            Tag="{Binding ScriptId}" FontSize="11"/>
+                                                                    <Button Style="{StaticResource ToolBtn}"
+                                                                            Content="Copy" Padding="10,0" Height="26"
                                                                             Click="BloxCopy_Click"
-                                                                            Tag="{Binding ScriptId}" FontSize="10"/>
+                                                                            Tag="{Binding ScriptId}" FontSize="11"/>
                                                                 </StackPanel>
                                                             </Grid>
                                                         </Grid>
@@ -976,69 +872,75 @@
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
+                                        <TextBlock x:Name="BloxLoadingText" Text="Loading scripts..."
+                                                   Foreground="#444444" FontSize="12"
+                                                   HorizontalAlignment="Center" Margin="0,20,0,0"
+                                                   Visibility="Collapsed"/>
                                     </StackPanel>
                                 </StackPanel>
                             </ScrollViewer>
+
+                            <!-- Pagination bar (ScriptBlox) -->
+                            <Border Grid.Row="3" x:Name="PaginationBar"
+                                    Background="#0F0F0F" BorderBrush="{StaticResource BorderDim}"
+                                    BorderThickness="0,1,0,0" Padding="16,8"
+                                    Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Style="{StaticResource ToolBtn}" Content="? Prev"
+                                            Click="BloxPrevPage" Height="28" FontSize="11"/>
+                                    <TextBlock x:Name="PageLabel" Text="Page 1"
+                                               Foreground="#666666" FontSize="12"
+                                               VerticalAlignment="Center" Margin="6,0"/>
+                                    <Button Style="{StaticResource ToolBtn}" Content="Next ?"
+                                            Click="BloxNextPage" Height="28" FontSize="11"/>
+                                </StackPanel>
+                            </Border>
                         </Grid>
 
-                        <!-- ================================================ -->
-                        <!--  CLIENT MANAGER PAGE                              -->
-                        <!-- ================================================ -->
+                        <!-- ======================================================== -->
+                        <!--  CLIENT MANAGER PAGE                                      -->
+                        <!-- ======================================================== -->
                         <Grid x:Name="ViewClients" Visibility="Collapsed">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="55"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0" Background="#0B1020"
-                                    BorderBrush="#1A2235" BorderThickness="0,0,0,1"
+                            <Border Grid.Row="0" Background="#0F0F0F"
+                                    BorderBrush="{StaticResource BorderDim}" BorderThickness="0,0,0,1"
                                     Padding="20,0">
-                                <TextBlock Text="Client Manager" Foreground="{StaticResource BrushPrimary}"
-                                           FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock Text="Client Manager" Foreground="#DDDDDD"
+                                           FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             </Border>
-                            <ScrollViewer Grid.Row="1" Padding="20,16"
-                                          VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Disabled"
-                                          Style="{StaticResource NeonScrollViewer}">
+                            <ScrollViewer Grid.Row="1" Padding="20,16" VerticalScrollBarVisibility="Auto">
                                 <StackPanel>
-                                    <!-- Client card with glass effect -->
-                                    <Border Background="#111827" BorderBrush="#1E2A45"
-                                            BorderThickness="1" CornerRadius="12" Padding="24,22"
-                                            Width="340" HorizontalAlignment="Left">
-                                        <Border.Effect>
-                                            <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="4" Opacity="0.5" Direction="270"/>
-                                        </Border.Effect>
+                                    <Border Background="#111111" BorderBrush="#1E1E1E"
+                                            BorderThickness="1" CornerRadius="10" Padding="24,22"
+                                            Width="320" HorizontalAlignment="Left">
                                         <StackPanel>
-                                            <!-- Avatar with glow ring -->
-                                            <Border Width="72" Height="72" CornerRadius="36"
-                                                    Background="#0D1220" Margin="0,0,0,16"
+                                            <Border Width="66" Height="66" CornerRadius="33"
+                                                    Background="#1A1A1A" Margin="0,0,0,14"
                                                     HorizontalAlignment="Center" ClipToBounds="True"
-                                                    BorderBrush="#1E2A45" BorderThickness="2">
-                                                <Border.Effect>
-                                                    <DropShadowEffect Color="#00E5FF" BlurRadius="12" ShadowDepth="0" Opacity="0"/>
-                                                </Border.Effect>
+                                                    BorderBrush="#222222" BorderThickness="2">
                                                 <Image x:Name="ClientAvatarImage" Stretch="UniformToFill"/>
                                             </Border>
-
                                             <TextBlock x:Name="ClientAccountName" Text="Not Connected"
-                                                       TextAlignment="Center" FontSize="17"
-                                                       Foreground="{StaticResource BrushPrimary}"
-                                                       FontWeight="SemiBold" Margin="0,0,0,4"/>
-                                            <TextBlock x:Name="ClientPidText" Text="PID: —  ·  Place: —"
+                                                       TextAlignment="Center" FontSize="16"
+                                                       Foreground="#DDDDDD" FontWeight="SemiBold"
+                                                       Margin="0,0,0,4"/>
+                                            <TextBlock x:Name="ClientPidText"
+                                                       Text="PID: x  x  Place: x"
                                                        TextAlignment="Center" FontSize="10.5"
-                                                       Foreground="{StaticResource BrushDim}"
-                                                       Margin="0,0,0,18"/>
-
-                                            <!-- Status badge -->
-                                            <Border x:Name="ClientBadgeBg" Background="#111827"
-                                                    BorderBrush="#1E2A45" BorderThickness="1"
-                                                    CornerRadius="20" Padding="16,6"
+                                                       Foreground="#444444" Margin="0,0,0,16"/>
+                                            <Border x:Name="ClientBadgeBg" Background="#1A1A1A"
+                                                    BorderBrush="#222222" BorderThickness="1"
+                                                    CornerRadius="20" Padding="14,5"
                                                     HorizontalAlignment="Center">
                                                 <StackPanel Orientation="Horizontal">
                                                     <Ellipse x:Name="ClientStatusDot" Width="5" Height="5"
-                                                             Fill="{StaticResource BrushDim}" VerticalAlignment="Center"/>
+                                                             Fill="#333333" VerticalAlignment="Center"/>
                                                     <TextBlock x:Name="ClientStatusBadge" Text="DISCONNECTED"
                                                                FontSize="10" FontWeight="Bold"
-                                                               Foreground="{StaticResource BrushDim}"/>
+                                                               Foreground="#444444"/>
                                                 </StackPanel>
                                             </Border>
                                         </StackPanel>
@@ -1047,81 +949,364 @@
                             </ScrollViewer>
                         </Grid>
 
-                        <!-- ================================================ -->
-                        <!--  SETTINGS PAGE                                    -->
-                        <!-- ================================================ -->
+                        <!-- ======================================================== -->
+                        <!--  SETTINGS PAGE                                            -->
+                        <!-- ======================================================== -->
                         <Grid x:Name="ViewSettings" Visibility="Collapsed">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="55"/>
+                                <!-- Settings sub-tab bar -->
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0" Background="#0B1020"
-                                    BorderBrush="#1A2235" BorderThickness="0,0,0,1"
-                                    Padding="20,0">
-                                <TextBlock Text="Settings" Foreground="{StaticResource BrushPrimary}"
-                                           FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
-                            </Border>
-                            <ScrollViewer Grid.Row="1" Padding="20,16"
-                                          VerticalScrollBarVisibility="Auto"
-                                          Style="{StaticResource NeonScrollViewer}">
-                                <StackPanel Width="420" HorizontalAlignment="Left">
-                                    <!-- Developer Controls -->
-                                    <Border Background="#111827" BorderBrush="#1E2A45"
-                                            BorderThickness="1" CornerRadius="12" Padding="22,18"
-                                            Margin="0,0,0,12">
-                                        <StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
-                                                <Path Data="M 8,5 A 3,3 0 1,0 8,11 A 3,3 0 1,0 8,5 Z M 8,0 L 8,3 M 8,13 L 8,16 M 0,8 L 3,8 M 13,8 L 16,8 M 2.3,2.3 L 4.4,4.4 M 11.6,11.6 L 13.7,13.7 M 13.7,2.3 L 11.6,4.4 M 4.4,11.6 L 2.3,13.7"
-                                                      Stroke="{StaticResource BrushSecondary}" StrokeThickness="1.5"
-                                                      Stretch="Uniform" Width="14" Height="14"
-                                                      StrokeEndLineCap="Round" Margin="0,0,10,0"/>
-                                                <TextBlock Text="Developer" Foreground="{StaticResource BrushSecondary}"
-                                                           FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center"/>
-                                            </StackPanel>
-                                            <CheckBox Foreground="{StaticResource BrushDim}" FontSize="12"
-                                                       Checked="ToggleConsole_Checked"
-                                                       Unchecked="ToggleConsole_Unchecked"
-                                                       Cursor="Hand" Margin="0,0,0,6">
-                                                <CheckBox.Content>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="Debug Console" VerticalAlignment="Center"/>
-                                                        <TextBlock Text="(stdout)" Foreground="{StaticResource BrushMuted}"
-                                                                   FontSize="10" VerticalAlignment="Center"/>
-                                                    </StackPanel>
-                                                </CheckBox.Content>
-                                            </CheckBox>
-                                        </StackPanel>
-                                    </Border>
 
-                                    <!-- About -->
-                                    <Border Background="#111827" BorderBrush="#1E2A45"
-                                            BorderThickness="1" CornerRadius="12" Padding="22,18">
-                                        <StackPanel>
-                                            <TextBlock Text="About" Foreground="{StaticResource BrushSecondary}"
-                                                       FontWeight="SemiBold" FontSize="13" Margin="0,0,0,12"/>
-                                            <TextBlock Foreground="{StaticResource BrushDim}" FontSize="11">
-                                                    <Run Text="Syntax Executor v1.0.0"/>
-                                                    <LineBreak/>
-                                                    <Run Text="Electron-like WPF C# + C++ Core"/>
-                                                    <LineBreak/>
-                                                    <Run Text="ScriptBlox.com Integration • External Execution Engine"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </Border>
+                            <!-- Settings sub-tab bar -->
+                            <Border Grid.Row="0" Background="#111111"
+                                    BorderBrush="{StaticResource BorderDim}"
+                                    BorderThickness="0,0,0,1" Padding="14,8">
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton Style="{StaticResource SettingsTab}" Content="General"
+                                                 IsChecked="True" Checked="SettingsTab_General"/>
+                                    <RadioButton Style="{StaticResource SettingsTab}" Content="Integrations"
+                                                 Checked="SettingsTab_Integrations"/>
+                                    <RadioButton Style="{StaticResource SettingsTab}" Content="Startup"
+                                                 Checked="SettingsTab_Startup"/>
+                                    <RadioButton Style="{StaticResource SettingsTab}" Content="Appearance"
+                                                 Checked="SettingsTab_Appearance"/>
+                                    <RadioButton Style="{StaticResource SettingsTab}" Content="Window"
+                                                 Checked="SettingsTab_Window"/>
                                 </StackPanel>
+                            </Border>
+
+                            <!-- Settings sub-page scroll area -->
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <Grid>
+
+                                <!-- GENERAL tab -->
+                                <Grid x:Name="SettingsGeneral" Visibility="Visible">
+                                    <StackPanel Margin="20,16">
+                                        <TextBlock Text="GENERAL" Foreground="#444444"
+                                                   FontSize="10" FontWeight="SemiBold" Margin="0,0,0,3"/>
+                                        <Border Height="1" Background="#1A1A1A" Margin="0,0,0,14"/>
+                                        <TextBlock Text="Core app behavior" Foreground="#444444"
+                                                   FontSize="11" Margin="0,-8,0,14"/>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Folders" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Quickly open important Brilliant folders"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center">
+                                                    <Button Style="{StaticResource ToolBtn}" Height="30"
+                                                            Click="OpenWorkspace_Click">
+                                                        <TextBlock Text="Open Workspace" FontSize="11"/>
+                                                    </Button>
+                                                    <Button Style="{StaticResource ToolBtn}" Height="30"
+                                                            Click="OpenAutoexec_Click">
+                                                        <TextBlock Text="Open Autoexec" FontSize="11"/>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Restart App" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Restart to apply changes or recover from issues"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <Button Style="{StaticResource ToolBtn}" Height="30"
+                                                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                        Click="RestartApp_Click">
+                                                    <TextBlock Text="Restart" FontSize="11"/>
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Always on Top" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Keep window above other applications"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          Checked="AlwaysOnTop_Checked"
+                                                          Unchecked="AlwaysOnTop_Unchecked"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Auto Attach" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Automatically attach to Roblox processes"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleAutoAttach"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- INTEGRATIONS tab -->
+                                <Grid x:Name="SettingsIntegrations" Visibility="Collapsed">
+                                    <StackPanel Margin="20,16">
+                                        <TextBlock Text="INTEGRATIONS" Foreground="#444444"
+                                                   FontSize="10" FontWeight="SemiBold" Margin="0,0,0,3"/>
+                                        <Border Height="1" Background="#1A1A1A" Margin="0,0,0,3"/>
+                                        <TextBlock Text="Connections and diagnostics"
+                                                   Foreground="#444444" FontSize="11" Margin="0,0,0,14"/>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Discord RPC" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Show Brilliant status in Discord"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleDiscordRPC"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          IsChecked="True"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Debug Console" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Enable console window for debugging"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleConsoleSwitch"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          Checked="ToggleConsole_Checked"
+                                                          Unchecked="ToggleConsole_Unchecked"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Notification Sound" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Play a sound when in-app notifications appear"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleNotifSound"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Sidebar Client Count" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Show attached clients count badge in sidebar"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleSidebarCount"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          IsChecked="True"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Taskbar Client Count" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Show attached clients count on taskbar overlay"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleTaskbarCount"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          IsChecked="True"/>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- STARTUP tab -->
+                                <Grid x:Name="SettingsStartup" Visibility="Collapsed">
+                                    <StackPanel Margin="20,16">
+                                        <TextBlock Text="STARTUP" Foreground="#444444"
+                                                   FontSize="10" FontWeight="SemiBold" Margin="0,0,0,3"/>
+                                        <Border Height="1" Background="#1A1A1A" Margin="0,0,0,3"/>
+                                        <TextBlock Text="How Brilliant opens" Foreground="#444444"
+                                                   FontSize="11" Margin="0,0,0,14"/>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Restore Last Page" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Automatically open the last viewed page when Brilliant starts"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleRestorePage"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          IsChecked="True"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Default Page on Restart" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Choose which page to open when Brilliant starts"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center">
+                                                    <Button Style="{StaticResource ToolBtn}" Height="26"
+                                                            Padding="10,0" FontSize="11" Content="Dashboard"
+                                                            Click="SetDefaultPage_Click" Tag="Dashboard"/>
+                                                    <Button Style="{StaticResource ToolBtn}" Height="26"
+                                                            Padding="10,0" FontSize="11" Content="Executor"
+                                                            Click="SetDefaultPage_Click" Tag="Executor"/>
+                                                    <Button Style="{StaticResource ToolBtn}" Height="26"
+                                                            Padding="10,0" FontSize="11" Content="Scripthub"
+                                                            Click="SetDefaultPage_Click" Tag="Scripthub"/>
+                                                    <Button Style="{StaticResource ToolBtn}" Height="26"
+                                                            Padding="10,0" FontSize="11" Content="Settings"
+                                                            Click="SetDefaultPage_Click" Tag="Settings"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- APPEARANCE tab -->
+                                <Grid x:Name="SettingsAppearance" Visibility="Collapsed">
+                                    <StackPanel Margin="20,16">
+                                        <TextBlock Text="APPEARANCE" Foreground="#444444"
+                                                   FontSize="10" FontWeight="SemiBold" Margin="0,0,0,3"/>
+                                        <Border Height="1" Background="#1A1A1A" Margin="0,0,0,3"/>
+                                        <TextBlock Text="Personalize the look" Foreground="#444444"
+                                                   FontSize="11" Margin="0,0,0,14"/>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Editor Minimap" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Show preview map on the right side"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleMinimap"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          IsChecked="True"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Editor Word Wrap" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Wrap long lines in the editor"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleWordWrap"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          Checked="WordWrap_Checked"
+                                                          Unchecked="WordWrap_Unchecked"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Editor Line Numbers" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Show line numbers in the editor"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleLineNumbers"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          IsChecked="True"
+                                                          Checked="LineNumbers_Checked"
+                                                          Unchecked="LineNumbers_Unchecked"/>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- WINDOW tab -->
+                                <Grid x:Name="SettingsWindow" Visibility="Collapsed">
+                                    <StackPanel Margin="20,16">
+                                        <TextBlock Text="WINDOW" Foreground="#444444"
+                                                   FontSize="10" FontWeight="SemiBold" Margin="0,0,0,3"/>
+                                        <Border Height="1" Background="#1A1A1A" Margin="0,0,0,3"/>
+                                        <TextBlock Text="Window behavior" Foreground="#444444"
+                                                   FontSize="11" Margin="0,0,0,14"/>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="System Tray" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Hide to tray instead of quitting when closing"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleTray"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Style="{StaticResource SettingsRow}">
+                                            <Grid>
+                                                <StackPanel>
+                                                    <TextBlock Text="Save Window Position" Foreground="#CCCCCC"
+                                                               FontSize="13" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="Remember window position between sessions"
+                                                               Foreground="#555555" FontSize="11" Margin="0,3,0,0"/>
+                                                </StackPanel>
+                                                <CheckBox x:Name="ToggleSavePos"
+                                                          Style="{StaticResource ToggleSwitch}"
+                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                          IsChecked="True"/>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                                </Grid><!-- /settings panels wrapper -->
                             </ScrollViewer>
                         </Grid>
 
-                        <!-- ================================================ -->
-                        <!--  LOADING OVERLAY                                  -->
-                        <!-- ================================================ -->
+                        <!-- ======================================================== -->
+                        <!--  LOADING OVERLAY                                          -->
+                        <!-- ======================================================== -->
                         <Border x:Name="LoadingOverlay" Visibility="Collapsed"
-                                Background="#0A0E1A" Opacity="0.85"
-                                Panel.ZIndex="50">
+                                Background="#CC0D0D0D" Panel.ZIndex="50">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Border Width="40" Height="40" CornerRadius="20"
-                                        BorderBrush="{StaticResource BrushAccent}"
-                                        BorderThickness="2"
+                                <Border Width="36" Height="36" CornerRadius="18"
+                                        BorderBrush="#333333" BorderThickness="2"
                                         Background="Transparent">
                                     <Border.Triggers>
                                         <EventTrigger RoutedEvent="Border.Loaded">
@@ -1136,29 +1321,25 @@
                                     </Border.Triggers>
                                 </Border>
                                 <TextBlock x:Name="LoadingText" Text="Loading..."
-                                           Foreground="{StaticResource BrushAccent}"
-                                           FontSize="12" FontWeight="SemiBold"
-                                           Margin="0,12,0,0" HorizontalAlignment="Center"/>
+                                           Foreground="#666666" FontSize="12"
+                                           Margin="0,10,0,0" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
 
-                        <!-- ================================================ -->
-                        <!--  NOTIFICATION TOAST                                -->
-                        <!-- ================================================ -->
+                        <!-- ======================================================== -->
+                        <!--  NOTIFICATION TOAST                                       -->
+                        <!-- ======================================================== -->
                         <Border x:Name="NotificationBox" Visibility="Collapsed"
-                                Background="#111827" BorderBrush="#2D3F66"
-                                BorderThickness="1" CornerRadius="10"
-                                Padding="14,10" HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom" Margin="0,0,16,40"
-                                Panel.ZIndex="99" MinWidth="200">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="16" ShadowDepth="4" Opacity="0.6"/>
-                            </Border.Effect>
+                                Background="#161616" BorderBrush="#2A2A2A"
+                                BorderThickness="1" CornerRadius="8"
+                                Padding="12,8" HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom" Margin="0,0,14,36"
+                                Panel.ZIndex="99" MinWidth="180">
                             <StackPanel Orientation="Horizontal">
-                                <Path x:Name="NotificationIcon" Width="16" Height="16"
-                                      Stretch="Uniform" StrokeThickness="1.8"
+                                <Path x:Name="NotificationIcon" Width="14" Height="14"
+                                      Stretch="Uniform" StrokeThickness="1.6"
                                       Fill="Transparent" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="NotificationText" Foreground="{StaticResource BrushSecondary}"
+                                <TextBlock x:Name="NotificationText" Foreground="#CCCCCC"
                                            FontSize="11.5" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -1166,6 +1347,6 @@
                     </Grid><!-- /page container -->
                 </Grid><!-- /main column -->
             </Grid><!-- /root grid -->
-        </Border><!-- /inner border -->
-    </Border><!-- /outer shadow border -->
+        </Border><!-- /inner -->
+    </Border><!-- /outer -->
 </Window>

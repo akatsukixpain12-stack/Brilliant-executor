@@ -10,12 +10,12 @@
     <PlatformTarget>x64</PlatformTarget>
     <AssemblyName>Syntax Executor</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Description>Syntax Executor - Premium Roblox Execution Engine with ScriptBlox Integration</Description>
-    <Company>Syntax</Company>
-    <Product>Syntax Executor</Product>
-    <Copyright>© 2026 Syntax</Copyright>
-    <Version>1.0.0.0</Version>
-    <FileVersion>1.0.0.0</FileVersion>
+    <Description>Brilliant Executor - Premium Roblox Execution Engine with ScriptBlox Integration</Description>
+    <Company>Brilliant</Company>
+    <Product>Brilliant Executor</Product>
+    <Copyright>© 2026 Brilliant</Copyright>
+    <Version>2.0.0.0</Version>
+    <FileVersion>2.0.0.0</FileVersion>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
@@ -36,8 +36,13 @@
     </None>
   </ItemGroup>
 
+  <!-- Copy Syntax.dll from multiple possible build locations -->
   <Target Name="CopyNativeDll" AfterTargets="Build">
-    <Copy SourceFiles="$(SolutionDir)build\Release\Syntax.dll" DestinationFolder="$(OutDir)" Condition="Exists('$(SolutionDir)build\Release\Syntax.dll')" />
+    <Copy SourceFiles="$(ProjectDir)..\build\Release\Syntax.dll" DestinationFolder="$(OutDir)" Condition="Exists('$(ProjectDir)..\build\Release\Syntax.dll')" />
+    <Copy SourceFiles="$(ProjectDir)..\build\Release\SyntaxAPI.dll" DestinationFolder="$(OutDir)" DestinationFiles="$(OutDir)Syntax.dll" Condition="Exists('$(ProjectDir)..\build\Release\SyntaxAPI.dll')" />
+    <Copy SourceFiles="$(ProjectDir)bin\$(Configuration)\net10.0-windows\win-x64\Syntax.dll" DestinationFolder="$(OutDir)" Condition="Exists('$(ProjectDir)bin\$(Configuration)\net10.0-windows\win-x64\Syntax.dll')" />
+    <Copy SourceFiles="$(ProjectDir)..\publish\Syntax.dll" DestinationFolder="$(OutDir)" Condition="Exists('$(ProjectDir)..\publish\Syntax.dll')" />
+    <Warning Text="Syntax.dll not found — UI will run but DLL calls will fail until you build the C++ project (cmake -B build -A x64 &amp;&amp; cmake --build build --config Release)." Condition="!Exists('$(OutDir)Syntax.dll')" />
   </Target>
 
 </Project>

@@ -21,6 +21,8 @@
 #include <mutex>
 #include <functional>
 #include <chrono>
+#include <fstream>
+#include <sstream>
 
 using json = nlohmann::json;
 
@@ -112,6 +114,47 @@ public:
             }
         });
 
+        // --- Clipboard endpoint ---
+        sServer->Get("/clipboard", [](const httplib::Request&, httplib::Response& res) {
+            std::lock_guard<std::mutex> lock(sClipMutex);
+            res.set_content(sClipboardContent, "text/plain");
+        });
+        sServer->Post("/clipboard", [](const httplib::Request& req, httplib::Response& res) {
+            std::lock_guard<std::mutex> lock(sClipMutex);
+            sClipboardContent = req.body;
+            res.set_content("ok", "text/plain");
+        });
+
+        // --- HWID endpoint ---
+        sServer->Get("/hwid", [](const httplib::Request&, httplib::Response& res) {
+            res.set_content(GetHwid(), "text/plain");
+        });
+
+        // --- Native loadstring/compile endpoint ---
+        sServer->Post("/compile", [](const httplib::Request& req, httplib::Response& res) {
+            HandleCompile(req, res);
+        });
+
+        // --- File system endpoints ---
+        sServer->Get("/fs/read", [](const httplib::Request& req, httplib::Response& res) {
+            std::string path = req.get_param_value("path");
+            if (path.empty()) { res.status = 400; res.set_content("Missing path", "text/plain"); return; }
+            std::string content = ReadWorkspaceFile(path);
+            res.set_content(content, "text/plain");
+        });
+        sServer->Post("/fs/write", [](const httplib::Request& req, httplib::Response& res) {
+            std::string path = req.get_param_value("path");
+            if (path.empty()) { res.status = 400; res.set_content("Missing path", "text/plain"); return; }
+            WriteWorkspaceFile(path, req.body);
+            res.set_content("ok", "text/plain");
+        });
+        sServer->Post("/fs/append", [](const httplib::Request& req, httplib::Response& res) {
+            std::string path = req.get_param_value("path");
+            if (path.empty()) { res.status = 400; res.set_content("Missing path", "text/plain"); return; }
+            AppendWorkspaceFile(path, req.body);
+            res.set_content("ok", "text/plain");
+        });
+
         // --- Cleanup endpoint ---
         // Lua sends this before server leave so we can restore modules
         sServer->Post("/cleanup", [](const httplib::Request&, httplib::Response& res) {
@@ -161,6 +204,99 @@ public:
     }
 
 private:
+    static inline std::mutex sClipMutex;
+    static inline std::string sClipboardContent;
+
+    static std::string GetWorkspacePath() {
+        char buf[MAX_PATH];
+        GetModuleFileNameA(nullptr, buf, MAX_PATH);
+        std::string exePath(buf);
+        size_t pos = exePath.find_last_of("\\/");
+        std::string dir = (pos != std::string::npos) ? exePath.substr(0, pos) : exePath;
+        return dir + "\\workspace";
+    }
+
+    static void EnsureWorkspaceDir() {
+        std::string dir = GetWorkspacePath();
+        CreateDirectoryA(dir.c_str(), nullptr);
+    }
+
+    static std::string ReadWorkspaceFile(const std::string& path) {
+        EnsureWorkspaceDir();
+        std::string fullPath = GetWorkspacePath() + "\\" + path;
+        std::ifstream file(fullPath, std::ios::binary);
+        if (!file.is_open()) return "";
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        return buffer.str();
+    }
+
+    static void WriteWorkspaceFile(const std::string& path, const std::string& content) {
+        EnsureWorkspaceDir();
+        // Create parent directories
+        std::string fullPath = GetWorkspacePath() + "\\" + path;
+        size_t pos = fullPath.find_last_of("\\/");
+        if (pos != std::string::npos) {
+            std::string dirs = fullPath.substr(0, pos);
+            size_t start = 0;
+            while ((start = dirs.find('\\', start)) != std::string::npos) {
+                std::string sub = dirs.substr(0, start);
+                CreateDirectoryA(sub.c_str(), nullptr);
+                start++;
+            }
+            CreateDirectoryA(dirs.c_str(), nullptr);
+        }
+        std::ofstream file(fullPath, std::ios::binary | std::ios::trunc);
+        if (file.is_open()) file.write(content.data(), content.size());
+    }
+
+    static void AppendWorkspaceFile(const std::string& path, const std::string& content) {
+        EnsureWorkspaceDir();
+        std::string fullPath = GetWorkspacePath() + "\\" + path;
+        std::ofstream file(fullPath, std::ios::binary | std::ios::app);
+        if (file.is_open()) file.write(content.data(), content.size());
+    }
+
+    static std::string GetHwid() {
+        // Simple HWID based on machine GUID
+        HKEY hKey;
+        char buffer[256] = { 0 };
+        DWORD size = sizeof(buffer);
+        if (RegOpenKeyExA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Cryptography", 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+            if (RegQueryValueExA(hKey, "MachineGuid", nullptr, nullptr, (LPBYTE)buffer, &size) == ERROR_SUCCESS) {
+                RegCloseKey(hKey);
+                return std::string(buffer);
+            }
+            RegCloseKey(hKey);
+        }
+        return "Brilliant-Unknown";
+    }
+
+    static void HandleCompile(const httplib::Request& req, httplib::Response& res) {
+        std::string source = req.body;
+        if (source.empty()) {
+            res.status = 400;
+            res.set_content("Empty source", "text/plain");
+            return;
+        }
+
+        auto [ok, bytecodeOrErr] = LuauCompiler::Compile(source);
+        if (!ok) {
+            res.status = 400;
+            res.set_content(bytecodeOrErr, "text/plain");
+            return;
+        }
+
+        std::string rsb1 = RSB1Encoder::Encode(bytecodeOrErr);
+        if (rsb1.empty()) {
+            res.status = 500;
+            res.set_content("Encoding failed", "text/plain");
+            return;
+        }
+
+        res.set_content(rsb1, "application/octet-stream");
+    }
+
     // Heartbeat watchdog — detects dead Lua session and restores modules
     static void StartWatchdog() {
         sWatchdogThread = std::thread([]() {

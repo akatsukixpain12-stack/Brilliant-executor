@@ -251,8 +251,23 @@ end
 
 function Syntax.getgenv() return genv end
 function Syntax.getrenv() return getfenv(0) end
-function Syntax.identifyexecutor() return "Syntax", "1.0.0" end
-function Syntax.getexecutorname() return "Syntax" end
+function Syntax.identifyexecutor() return "Brilliant", "2.0.0" end
+function Syntax.getexecutorname() return "Brilliant" end
+
+-- dumpstring: compile source to bytecode via C++ /compile endpoint
+function Syntax.dumpstring(src)
+    if type(src) ~= "string" then return nil, "invalid argument #1 to 'dumpstring'" end
+    local result = SendRequest({
+        Url = SERVER .. "/compile",
+        Body = src,
+        Method = "POST",
+        Headers = {["Content-Type"] = "text/plain"}
+    }, 10)
+    if not result or not result.Success or result.StatusCode ~= 200 then
+        return nil, (result and result.Body) or "Compilation failed"
+    end
+    return result.Body
+end
 
 -- Identity functions (return true identity 8 now that we are natively 8!)
 function Syntax.getidentity() return 8 end
@@ -298,6 +313,7 @@ genv.getthreadidentity = Syntax.getthreadidentity
 genv.setthreadidentity = Syntax.setthreadidentity
 genv.getthreadcontext = Syntax.getthreadcontext
 genv.gethui = Syntax.gethui
+genv.dumpstring = Syntax.dumpstring
 
 -- Ensure raw metatable access is unlocked for sandbox interactions
 pcall(function() setreadonly(getrawmetatable(game), false) end)
