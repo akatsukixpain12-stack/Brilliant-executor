@@ -11,11 +11,13 @@
     <AssemblyName>Syntax Executor</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Description>Brilliant Executor - Premium Roblox Execution Engine with ScriptBlox Integration</Description>
-    <Company>Brilliant</Company>
+    <Company>Brilliant Team</Company>
     <Product>Brilliant Executor</Product>
-    <Copyright>© 2026 Brilliant</Copyright>
+    <Copyright>© 2026 Brilliant Team</Copyright>
     <Version>2.0.0.0</Version>
     <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyTitle>Brilliant Executor</AssemblyTitle>
+    <Trademark>Brilliant</Trademark>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>

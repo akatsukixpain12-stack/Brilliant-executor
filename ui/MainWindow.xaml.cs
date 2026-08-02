@@ -100,7 +100,7 @@ namespace RblxExecutorUI
         // ================================================================
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();  // ALL named elements exist after this line
 
             _http = new HttpClient();
             _http.DefaultRequestHeaders.Add("User-Agent", "BrilliantExecutor/1.0");
@@ -109,11 +109,12 @@ namespace RblxExecutorUI
             _notifTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
             _notifTimer.Tick += (s, e) => CloseNotification();
 
-            ScriptHubList.ItemsSource    = ScriptsList;
+            // Safe to access named elements now
+            ScriptHubList.ItemsSource       = ScriptsList;
             BloxScriptsListView.ItemsSource = BloxScriptsList;
 
             // Populate Dashboard updates list
-            var updates = new List<string>
+            UpdatesList.ItemsSource = new List<string>
             {
                 "Added ScriptBlox full script library integration",
                 "Added Settings with General, Integrations, Startup, Appearance, Window tabs",
@@ -125,7 +126,6 @@ namespace RblxExecutorUI
                 "Added RSB1 + BLAKE3 signed bytecode encoding",
                 "Improved UNC sandbox compatibility"
             };
-            UpdatesList.ItemsSource = updates;
 
             LoadScriptsFolder();
             this.Loaded += MainWindow_Loaded;
@@ -301,14 +301,18 @@ namespace RblxExecutorUI
         // ================================================================
         //  PAGE NAVIGATION
         // ================================================================
-        private void Tab_Dashboard(object sender, RoutedEventArgs e) => SwitchPage(ViewDashboard);
-        private void Tab_Editor(object sender, RoutedEventArgs e)     => SwitchPage(ViewEditor);
-        private void Tab_ScriptHub(object sender, RoutedEventArgs e)  => SwitchPage(ViewScriptHub);
-        private void Tab_Clients(object sender, RoutedEventArgs e)    => SwitchPage(ViewClients);
-        private void Tab_Settings(object sender, RoutedEventArgs e)   => SwitchPage(ViewSettings);
+        private void Tab_Dashboard(object sender, RoutedEventArgs e) { if (ViewDashboard != null) SwitchPage(ViewDashboard); }
+        private void Tab_Editor(object sender, RoutedEventArgs e)     { if (ViewEditor    != null) SwitchPage(ViewEditor);    }
+        private void Tab_ScriptHub(object sender, RoutedEventArgs e)  { if (ViewScriptHub != null) SwitchPage(ViewScriptHub); }
+        private void Tab_Clients(object sender, RoutedEventArgs e)    { if (ViewClients   != null) SwitchPage(ViewClients);   }
+        private void Tab_Settings(object sender, RoutedEventArgs e)   { if (ViewSettings  != null) SwitchPage(ViewSettings);  }
 
-        private void SwitchPage(Grid target)
+        private void SwitchPage(Grid? target)
         {
+            // Guard: called during XAML init before named elements exist
+            if (target == null) return;
+            if (ViewEditor == null) return; // not yet initialized
+
             foreach (var g in new[] { ViewDashboard, ViewEditor, ViewScriptHub, ViewClients, ViewSettings })
                 if (g != null) g.Visibility = Visibility.Collapsed;
 
@@ -792,22 +796,23 @@ namespace RblxExecutorUI
         // ================================================================
         private void HideAllSettingsPanels()
         {
-            SettingsGeneral.Visibility     = Visibility.Collapsed;
-            SettingsIntegrations.Visibility= Visibility.Collapsed;
-            SettingsStartup.Visibility     = Visibility.Collapsed;
-            SettingsAppearance.Visibility  = Visibility.Collapsed;
-            SettingsWindow.Visibility      = Visibility.Collapsed;
+            if (SettingsGeneral == null) return; // guard against init-time calls
+            SettingsGeneral.Visibility      = Visibility.Collapsed;
+            SettingsIntegrations.Visibility = Visibility.Collapsed;
+            SettingsStartup.Visibility      = Visibility.Collapsed;
+            SettingsAppearance.Visibility   = Visibility.Collapsed;
+            SettingsWindow.Visibility       = Visibility.Collapsed;
         }
         private void SettingsTab_General(object sender, RoutedEventArgs e)
-            { HideAllSettingsPanels(); SettingsGeneral.Visibility = Visibility.Visible; }
+            { HideAllSettingsPanels(); if (SettingsGeneral != null) SettingsGeneral.Visibility = Visibility.Visible; }
         private void SettingsTab_Integrations(object sender, RoutedEventArgs e)
-            { HideAllSettingsPanels(); SettingsIntegrations.Visibility = Visibility.Visible; }
+            { HideAllSettingsPanels(); if (SettingsIntegrations != null) SettingsIntegrations.Visibility = Visibility.Visible; }
         private void SettingsTab_Startup(object sender, RoutedEventArgs e)
-            { HideAllSettingsPanels(); SettingsStartup.Visibility = Visibility.Visible; }
+            { HideAllSettingsPanels(); if (SettingsStartup != null) SettingsStartup.Visibility = Visibility.Visible; }
         private void SettingsTab_Appearance(object sender, RoutedEventArgs e)
-            { HideAllSettingsPanels(); SettingsAppearance.Visibility = Visibility.Visible; }
+            { HideAllSettingsPanels(); if (SettingsAppearance != null) SettingsAppearance.Visibility = Visibility.Visible; }
         private void SettingsTab_Window(object sender, RoutedEventArgs e)
-            { HideAllSettingsPanels(); SettingsWindow.Visibility = Visibility.Visible; }
+            { HideAllSettingsPanels(); if (SettingsWindow != null) SettingsWindow.Visibility = Visibility.Visible; }
 
         // ================================================================
         //  SETTINGS — GENERAL ACTIONS
