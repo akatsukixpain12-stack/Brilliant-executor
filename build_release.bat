@@ -18,7 +18,7 @@ echo Building version: %VERSION%
 echo.
 
 REM Check for required tools
-echo [1/5] Checking for required tools...
+echo [1/6] Checking for required tools...
 where cmake >nul 2>&1
 if errorlevel 1 (
     echo ERROR: CMake not found. Please install CMake 3.10+
@@ -34,70 +34,110 @@ if errorlevel 1 (
 echo [OK] CMake and .NET SDK found
 echo.
 
+REM Clean build directory
+echo [2/6] Cleaning previous builds...
+if exist build rmdir /s /q build >nul 2>&1
+if exist publish_ui rmdir /s /q publish_ui >nul 2>&1
+if exist release_files rmdir /s /q release_files >nul 2>&1
+echo [OK] Clean complete
+echo.
+
 REM Build C++ DLL
-echo [2/5] Building C++ DLL...
-if exist build rmdir /s /q build
-cmake -B build -A x64 -DCMAKE_BUILD_TYPE=Release
+echo [3/6] Building C++ DLL (Syntax.dll)...
+cmake -B build -A x64 -DCMAKE_BUILD_TYPE=Release >nul 2>&1
 if errorlevel 1 (
     echo ERROR: CMake configuration failed
     exit /b 1
 )
 
-cmake --build build --config Release
+cmake --build build --config Release >nul 2>&1
 if errorlevel 1 (
     echo ERROR: C++ build failed
     exit /b 1
 )
 
-echo [OK] C++ DLL built successfully
+if not exist "build\Release\Syntax.dll" (
+    echo ERROR: Syntax.dll not found after build
+    exit /b 1
+)
+echo [OK] Syntax.dll built successfully
 echo.
 
 REM Build C# UI
-echo [3/5] Building C# WPF UI...
+echo [4/6] Building C# UI (Syntax Executor.exe)...
 cd ui
-dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false --output ..\publish 2>nul
+dotnet restore >nul 2>&1
 if errorlevel 1 (
-    echo WARNING: C# build encountered issues, continuing...
-)
-cd ..
-
-REM Copy DLL to publish folder
-copy /y "build\Release\Syntax.dll" "publish\" >nul
-if errorlevel 1 (
-    echo ERROR: Failed to copy Syntax.dll to publish folder
+    echo ERROR: dotnet restore failed
+    cd ..
     exit /b 1
 )
 
-echo [OK] C# UI published successfully
+dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false -o ..\publish_ui >nul 2>&1
+if errorlevel 1 (
+    echo ERROR: C# build failed
+    cd ..
+    exit /b 1
+)
+
+if not exist "..\publish_ui\Syntax Executor.exe" (
+    echo ERROR: Syntax Executor.exe not found after build
+    cd ..
+    exit /b 1
+)
+cd ..
+echo [OK] Syntax Executor.exe built successfully
+echo.
+
+REM Prepare release files
+echo [5/6] Preparing release files...
+if not exist release_files mkdir release_files
+
+REM Copy UI executable
+copy /y "publish_ui\Syntax Executor.exe" "release_files\" >nul 2>&1
+if errorlevel 1 (
+    echo ERROR: Failed to copy Syntax Executor.exe
+    exit /b 1
+)
+
+REM Copy C++ DLL
+copy /y "build\Release\Syntax.dll" "release_files\" >nul 2>&1
+if errorlevel 1 (
+    echo ERROR: Failed to copy Syntax.dll
+    exit /b 1
+)
+
+REM Copy documentation
+copy /y "README.md" "release_files\" >nul 2>&1
+copy /y "LICENSE.txt" "release_files\" >nul 2>&1
+
+echo [OK] All release files prepared
+echo   - Syntax Executor.exe
+echo   - Syntax.dll
+echo   - README.md
+echo   - LICENSE.txt
 echo.
 
 REM Create Portable ZIP
-echo [4/5] Creating Portable ZIP...
-if not exist "Portable" mkdir Portable
-copy /y "publish\Syntax Executor.exe" "Portable\" >nul
-copy /y "publish\Syntax.dll" "Portable\" >nul
-copy /y "README.md" "Portable\" >nul
-copy /y "LICENSE.txt" "Portable\" >nul
+echo [6/6] Creating installers...
 
-powershell -Command "Compress-Archive -Path 'Portable\*' -DestinationPath 'BrilliantExecutor-Portable-v%VERSION%.zip' -Force" 2>nul
+powershell -Command "Compress-Archive -Path 'release_files\*' -DestinationPath 'BrilliantExecutor-Portable-v%VERSION%.zip' -Force" 2>nul
 if errorlevel 1 (
     echo WARNING: Failed to create portable ZIP
 ) else (
     echo [OK] Portable ZIP created: BrilliantExecutor-Portable-v%VERSION%.zip
 )
-echo.
 
 REM Try to build Inno Setup installer
-echo [5/5] Creating Setup Installer...
 where iscc >nul 2>&1
 if errorlevel 1 (
-    echo WARNING: Inno Setup not found. Skipping Setup Installer creation.
-    echo Install from: https://jrsoftware.org/isdl.php
-    echo You can manually create the installer using: installer\BrilliantExecutor-Setup.iss
+    echo [WARNING] Inno Setup not found. Skipping Setup Installer creation.
+    echo [INFO] Install from: https://jrsoftware.org/isdl.php
+    echo [INFO] Or manually create using: installer\BrilliantExecutor-Setup.iss
 ) else (
-    iscc /Q /DMyVersion=%VERSION% /O"." /F"BrilliantExecutor-Setup-v%VERSION%" "installer\BrilliantExecutor-Setup.iss"
+    iscc /Q /DMyVersion=%VERSION% /O"." /F"BrilliantExecutor-Setup-v%VERSION%" "installer\BrilliantExecutor-Setup.iss" >nul 2>&1
     if errorlevel 1 (
-        echo WARNING: Inno Setup compilation failed
+        echo [WARNING] Inno Setup compilation failed
     ) else (
         echo [OK] Setup Installer created: BrilliantExecutor-Setup-v%VERSION%.exe
     )
@@ -108,17 +148,22 @@ echo ====================================
 echo Build Complete!
 echo ====================================
 echo.
-echo Releases created:
-echo   - BrilliantExecutor-Portable-v%VERSION%.zip
-if exist "BrilliantExecutor-Setup-v%VERSION%.exe" (
-    echo   - BrilliantExecutor-Setup-v%VERSION%.exe
+echo Release files created:
+if exist "BrilliantExecutor-Portable-v%VERSION%.zip" (
+    echo   [OK] BrilliantExecutor-Portable-v%VERSION%.zip
 ) else (
-    echo   - BrilliantExecutor-Setup-v%VERSION%.exe (NOT CREATED - install Inno Setup)
+    echo   [FAILED] BrilliantExecutor-Portable-v%VERSION%.zip
+)
+if exist "BrilliantExecutor-Setup-v%VERSION%.exe" (
+    echo   [OK] BrilliantExecutor-Setup-v%VERSION%.exe
+) else (
+    echo   [FAILED] BrilliantExecutor-Setup-v%VERSION%.exe (install Inno Setup)
 )
 echo.
 echo Next steps:
-echo   1. Create a git tag: git tag v%VERSION%
-echo   2. Push the tag: git push origin v%VERSION%
-echo   3. Upload releases to GitHub manually or use the automated workflow
+echo   1. Test the installers
+echo   2. Create git tag: git tag v%VERSION%
+echo   3. Push tag: git push origin v%VERSION%
+echo   4. Upload to GitHub Releases
 echo.
 endlocal
