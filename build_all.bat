@@ -85,10 +85,33 @@ if %errorlevel% neq 0 (
 popd
 
 REM ============================================================================
-REM Step 3: Prepare publish folder
+REM Step 3: Sign the executable (if certificate exists)
 REM ============================================================================
 echo.
-echo [3/4] Preparing publish folder...
+echo [3/4] Code signing...
+echo.
+
+if exist "brilliant_cert.pfx" (
+    echo   [+] Certificate found, signing executable...
+    call sign_executable.bat "brilliant_cert.pfx" "Brilliant2026!" "ui\bin\Release\net10.0-windows\win-x64\publish\Syntax Executor.exe" >nul 2>&1
+    if exist "ui\bin\Release\net10.0-windows\win-x64\publish\Syntax Executor.exe" (
+        call sign_executable.bat "brilliant_cert.pfx" "Brilliant2026!" "ui\bin\Release\net10.0-windows\win-x64\publish\Syntax Executor.exe" >nul 2>&1
+    )
+    if exist "ui\bin\x64\Release\net10.0-windows\Syntax Executor.exe" (
+        call sign_executable.bat "brilliant_cert.pfx" "Brilliant2026!" "ui\bin\x64\Release\net10.0-windows\Syntax Executor.exe" >nul 2>&1
+    )
+    echo   [+] Executable signed with Brilliant Team certificate!
+) else (
+    echo   [INFO] No certificate found (brilliant_cert.pfx)
+    echo   [INFO] To sign the executable, run create_certificate.bat first
+    echo   [INFO] The executable will show as 'Unknown Publisher' without signing
+)
+
+REM ============================================================================
+REM Step 4: Prepare publish folder
+REM ============================================================================
+echo.
+echo [4/4] Preparing publish folder...
 echo.
 
 if not exist "publish" mkdir "publish"
@@ -124,10 +147,10 @@ if not exist "publish\Scripts\Example.lua" (
 echo   [+] Publish folder ready!
 
 REM ============================================================================
-REM Step 4: Build installer (if Inno Setup is available)
+REM Step 5: Build installer (if Inno Setup is available)
 REM ============================================================================
 echo.
-echo [4/4] Building installer...
+echo [5/5] Building installer...
 echo.
 
 where iscc >nul 2>&1
@@ -149,6 +172,10 @@ echo ============================================================
 echo   Build Complete!
 echo   UI:  publish\Syntax Executor.exe
 echo   DLL: publish\Syntax.dll
+echo.
+echo To sign the executable manually:
+echo   1. Run: create_certificate.bat
+echo   2. Run: sign_executable.bat brilliant_cert.pfx Brilliant2026! "publish\Syntax Executor.exe"
 echo ============================================================
 echo.
 pause

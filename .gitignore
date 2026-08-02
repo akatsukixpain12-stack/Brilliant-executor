@@ -41,6 +41,14 @@ Makefile
 *~
 *.swp
 
+# Code signing certificates (NEVER commit these!)
+*.pfx
+*.p12
+*.cer
+*.crt
+*.key
+brilliant_cert.*
+
 # VS Code
 *.code-workspace
 

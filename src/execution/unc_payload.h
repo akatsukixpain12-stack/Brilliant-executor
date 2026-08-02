@@ -1,4 +1,4 @@
-#pragma once
+mn#pragma once
 
 const char* unc_payload = R"LUA(
 -- ============================================================================
